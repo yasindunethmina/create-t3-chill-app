@@ -1,11 +1,8 @@
 import { AuthButton } from "@/components/auth-button";
-import { HelloClient } from "@/components/hello-client";
-import { api } from "./trpc/server";
+import { ClientComponent } from "@/components/client-component";
+import { ServerComponent } from "@/components/server-component";
 
 export default async function Home() {
-  const test = await api.hello({ text: "from server" });
-  console.log("test", test);
-
   return (
     <main className="min-h-screen flex flex-col items-center">
       <div className="flex-1 w-full flex flex-col gap-20 items-center">
@@ -14,8 +11,10 @@ export default async function Home() {
             <AuthButton />
           </div>
         </nav>
-        <div className="p-6">
-          <HelloClient />
+
+        <div className="p-6 flex flex-col gap-20 items-center justify-center">
+          <ServerComponent />
+          <ClientComponent />
         </div>
       </div>
     </main>
