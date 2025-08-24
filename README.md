@@ -1,51 +1,67 @@
-# 🚀 T3 Chill Stack
+## 🚀 T3 Chill Stack — Everything You Need in a Minimal, Powerful Stack
 
 **Next.js • Supabase • tRPC • Prisma • Stripe**
 
-The fastest way to ship products with a modern stack. Skip the setup, focus on building your product.
+<p>The fastest way to ship products with a modern stack. Skip the setup and focus on building your product.</p>
+<p>Ideal for developers and founders who want to start building or prototyping quickly with less effort.</p>
+
+<div align="center">
+  <p><em>Starter Kit Preview</em></p>
+  <img width="2800" height="3464" alt="localhost_3000_dashboard (1)" src="https://github.com/user-attachments/assets/9eae1fa7-646e-4ee8-b6ea-1407f7548222" />
+</div>
 
 ## ✨ Features
 
-### 🔐 **Authentication & Security**
+### 🔐 Authentication & Security
 
-- Complete authentication system with [Supabase](https://supabase.com)
-- Email/password auth with session management
-- Protected routes and middleware
-- Password reset and email confirmation
+- Complete authentication system with Supabase
+- Email/password authentication, sign up, login, password reset, and email confirmation flows
+- Protected routes with automatic redirects and session management
 
-### 🗄️ **Database & ORM**
+### 🗄️ Database & ORM
 
-- [Prisma](https://prisma.io) ORM with PostgreSQL
-- Type-safe database queries
-- Easy migrations and schema management
-- Auto-generated TypeScript types
+- Prisma ORM with PostgreSQL via Supabase
+- Type-safe database queries and auto-generated TypeScript types
+- Effortless schema management and migrations
+- Seamless local-to-production migration workflow
+- Pre-configured schema for subscriptions
 
-### 🔄 **Type-Safe APIs**
+### 🔄 Type-Safe APIs
 
-- [tRPC](https://trpc.io) for end-to-end type safety
-- No more REST endpoints - just functions
-- Real-time queries with React Query
-- Server and client-side data fetching
+- tRPC for end-to-end type safety
+- Separate public, authenticated, and subscribed procedures methods
+- Server-side and client-side data fetching
+- Automatic type generation and validation
 
-### 💳 **Payments & Subscriptions**
+### 💳 Payments & Subscriptions
 
-- Complete [Stripe](https://stripe.com) integration
-- Subscription management with webhooks
-- Protected features based on subscription status
+- Complete Stripe integration for payments and subscriptions
+- Subscription management with webhooks and protected content
+- Safe fallbacks for webhook failures to verify transactions
 - Clean subscription UI components
 
-### 🎨 **UI & Styling**
+### 🎨 UI & Styling
 
-- [Tailwind CSS](https://tailwindcss.com) for styling
-- [shadcn/ui](https://ui.shadcn.com/) components
-- Responsive design patterns
-- Modern component architecture
+- Tailwind CSS for rapid styling
+- shadcn/ui components for modern design
+- Responsive design patterns and modern component architecture
+- Custom subscription hook (useSubscription)
 
-### 🚀 **Deploy Ready**
+### 🚀 Deploy Ready
 
-- Optimized for [Vercel](https://vercel.com) deployment
-- Environment variables pre-configured
+- Optimized for Vercel deployment
+- Environment variables pre-configured for local and production
 - Edge runtime support
+
+<br>
+<div align="center">
+  <p><em>Protected Dashboard Example (Before Subscription)</em></p>
+  <img width="2800" height="2888" alt="localhost_3000_dashboard" src="https://github.com/user-attachments/assets/d87c2b69-8107-4da8-8f49-b4d09f6f9535" />
+</div>
+<div align="center">
+  <p><em>Protected Dashboard Example (With Active Subscription)</em></p>
+  <img width="2800" height="2600" alt="localhost_3000_dashboard (2)" src="https://github.com/user-attachments/assets/bdb275c9-6492-4898-832b-d08004f34cc6" />
+</div>
 
 ## 🎯 Quick Start
 
@@ -350,9 +366,7 @@ For detailed setup instructions and troubleshooting, visit your app's homepage a
 
 ## 🆘 Support
 
-- File issues on [GitHub](https://github.com/supabase/supabase/issues)
-- Join the [Supabase Discord](https://discord.supabase.com)
-- Check out [Supabase Documentation](https://supabase.com/docs)
+- File issues on [GitHub](https://github.com/yasindunethmina/t3-chill-stack/issues)
 
 ## 🔗 Resources
 
