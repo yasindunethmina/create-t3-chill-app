@@ -9,12 +9,38 @@ datasource db {
 }
 
 model user {
-  id         String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  name       String
-  email      String    @unique
-  posts      post[]
-  comments   comment[]
-  likedPosts post[]    @relation(name: "liked_posts")
+  id           String        @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name         String
+  email        String        @unique
+  posts        post[]
+  comments     comment[]
+  likedPosts   post[]        @relation(name: "liked_posts")
+  subscription subscription?
+}
+
+model subscription {
+  id                   String             @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId               String             @unique @db.Uuid
+  user                 user               @relation(fields: [userId], references: [id], onDelete: Cascade)
+  stripeCustomerId     String?            @unique
+  stripeSubscriptionId String?            @unique
+  stripePriceId        String?
+  status               SubscriptionStatus @default(INACTIVE)
+  currentPeriodStart   DateTime?
+  currentPeriodEnd     DateTime?
+  createdAt            DateTime           @default(dbgenerated("now()"))
+  updatedAt            DateTime           @updatedAt
+}
+
+enum SubscriptionStatus {
+  ACTIVE
+  CANCELED
+  INCOMPLETE
+  INCOMPLETE_EXPIRED
+  PAST_DUE
+  TRIALING
+  UNPAID
+  INACTIVE
 }
 
 model post {

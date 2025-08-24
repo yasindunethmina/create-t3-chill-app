@@ -31,7 +31,7 @@ const getPosts = (users: user[]): Prisma.postCreateInput[] => [
 
 const getComments = (
   users: user[],
-  posts: post[]
+  posts: post[],
 ): Prisma.commentCreateInput[] => [
   {
     author: {
@@ -55,22 +55,22 @@ const main = async () => {
         where: { email: user.email },
         update: {},
         create: user,
-      })
-    )
+      }),
+    ),
   );
   const posts = await Promise.all(
     getPosts(users).map((post) =>
       client.post.create({
         data: post,
-      })
-    )
+      }),
+    ),
   );
   const comments = await Promise.all(
     getComments(users, posts).map((comment) =>
       client.comment.create({
         data: comment,
-      })
-    )
+      }),
+    ),
   );
 
   console.log({ users, posts, comments });

@@ -1,22 +1,11 @@
-import { AuthButton } from "@/components/auth-button";
-import { ClientComponent } from "@/components/client-component";
-import { ServerComponent } from "@/components/server-component";
+import { HomeHero } from "@/components/page-components/home/home-hero";
+import { HomeSetupGuide } from "@/components/page-components/home/home-setup-guide";
 
-export default async function Home() {
+export default function HomePage() {
   return (
-    <main className="min-h-screen flex flex-col items-center">
-      <div className="flex-1 w-full flex flex-col gap-20 items-center">
-        <nav className="w-full flex justify-center border-b border-b-foreground/10 h-16">
-          <div className="w-full max-w-5xl flex justify-end items-center p-3 px-5 text-sm">
-            <AuthButton />
-          </div>
-        </nav>
-
-        <div className="p-6 flex flex-col gap-20 items-center justify-center">
-          <ServerComponent />
-          <ClientComponent />
-        </div>
-      </div>
-    </main>
+    <div className="flex flex-col gap-8 max-w-6xl mx-auto w-full min-h-screen">
+      <HomeHero />
+      <HomeSetupGuide />
+    </div>
   );
 }

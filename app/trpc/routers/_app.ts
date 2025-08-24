@@ -1,18 +1,10 @@
-import { createTRPCRouter, protectedProcedure, publicProcedure } from "../init";
+import { createTRPCRouter } from "../init";
+import { subscriptionRouter } from "./subscription";
+import { userRouter } from "./user";
 
 export const appRouter = createTRPCRouter({
-  hello: publicProcedure.query(() => {
-    return {
-      greeting: "hello",
-    };
-  }),
-  whoami: protectedProcedure.query(({ ctx }) => {
-    return { id: ctx.user.id, email: ctx.user.email };
-  }),
-  getPosts: publicProcedure.query(async ({ ctx }) => {
-    const posts = await ctx.prisma.post.findMany();
-    return posts;
-  }),
+  user: userRouter,
+  subscription: subscriptionRouter,
 });
 
 export type AppRouter = typeof appRouter;
