@@ -5,7 +5,7 @@ import { SubscriptionCard } from "@/components/subscription/subscription-card";
 import { getUser } from "@/lib/supabase/get-user";
 import { redirect } from "next/navigation";
 
-export default async function ProtectedPage() {
+export default async function DashboardPage() {
   const user = await getUser();
 
   if (!user) {

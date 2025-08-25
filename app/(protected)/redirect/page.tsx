@@ -100,7 +100,7 @@ export default async function RedirectPage({
     redirect(returnTo);
   }
 
-  // Default loading state while processing
+  // Default loading state while processing (should rarely be seen)
   return (
     <div className="my-20 flex items-center justify-center">
       <Card className="w-full max-w-md">
