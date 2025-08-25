@@ -337,6 +337,13 @@ NEXT_PUBLIC_APP_URL="https://[your-domain].com"
 - Protected content based on subscription status
 - Clean subscription UI components
 
+### 🛡️ **Environment Validation System**
+
+- Zod-based validation with automatic server/client separation
+- Type-safe access to environment variables
+- Prevents runtime errors from missing configuration
+- Handles both development and production environments
+
 ### 🎨 **UI & Styling**
 
 - shadcn/ui components with Tailwind CSS

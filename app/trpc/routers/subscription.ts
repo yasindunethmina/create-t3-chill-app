@@ -1,8 +1,7 @@
+import { env, isStripeConfigured } from "@/lib/env";
 import {
   createStripeClient,
   getDefaultPlan,
-  isStripeEnabled,
-  STRIPE_CONFIG,
 } from "@/lib/stripe";
 import { z } from "zod";
 import { authenticatedProcedure, createTRPCRouter } from "../init";
@@ -21,7 +20,7 @@ export const subscriptionRouter = createTRPCRouter({
       isSubscribed,
       status,
       currentPeriodEnd: user?.subscription?.currentPeriodEnd,
-      stripeEnabled: isStripeEnabled(),
+      stripeEnabled: isStripeConfigured(),
     };
   }),
 
@@ -34,7 +33,7 @@ export const subscriptionRouter = createTRPCRouter({
       }),
     )
     .mutation(async ({ ctx, input }) => {
-      if (!isStripeEnabled()) {
+      if (!isStripeConfigured()) {
         throw new Error(
           "Stripe is not properly configured. Please check your environment variables.",
         );
@@ -102,11 +101,11 @@ export const subscriptionRouter = createTRPCRouter({
         ],
         mode: "subscription",
         success_url: `${
-          STRIPE_CONFIG.baseUrl
+          env.NEXT_PUBLIC_APP_URL
         }/redirect?session_id={CHECKOUT_SESSION_ID}&type=${encodeURIComponent(
           input.type,
         )}&return_to=${encodeURIComponent(input.returnTo)}`,
-        cancel_url: `${STRIPE_CONFIG.baseUrl}${input.returnTo}`,
+        cancel_url: `${env.NEXT_PUBLIC_APP_URL}${input.returnTo}`,
         metadata: {
           userId: user.id,
         },
@@ -122,7 +121,7 @@ export const subscriptionRouter = createTRPCRouter({
       }),
     )
     .mutation(async ({ ctx, input }) => {
-      if (!isStripeEnabled()) {
+      if (!isStripeConfigured()) {
         throw new Error("Stripe is not properly configured");
       }
 

@@ -1,10 +1,11 @@
+import { serverEnv } from "@/lib/env";
 import { prisma } from "@/lib/prisma";
-import { createStripeClient, STRIPE_CONFIG } from "@/lib/stripe";
+import { createStripeClient } from "@/lib/stripe";
 import { NextRequest, NextResponse } from "next/server";
 import Stripe from "stripe";
 
 const stripe = createStripeClient();
-const endpointSecret = STRIPE_CONFIG.webhookSecret;
+const endpointSecret = serverEnv().STRIPE_WEBHOOK_SECRET;
 
 const statusMapping = {
   active: "ACTIVE",

@@ -1,5 +1,6 @@
 import { Footer } from "@/components/shared/footer";
 import MenuTop from "@/components/shared/menu-top";
+import { env } from "@/lib/env";
 import type { Metadata } from "next";
 import { ThemeProvider } from "next-themes";
 import { Geist } from "next/font/google";
@@ -8,9 +9,7 @@ import "./globals.css";
 import { TRPCProvider } from "./trpc/client";
 import { HydrateClient } from "./trpc/server";
 
-const defaultUrl = process.env.VERCEL_URL
-  ? `https://${process.env.VERCEL_URL}`
-  : "http://localhost:3000";
+const defaultUrl = env.NEXT_PUBLIC_APP_URL;
 
 export const metadata: Metadata = {
   metadataBase: new URL(defaultUrl),
