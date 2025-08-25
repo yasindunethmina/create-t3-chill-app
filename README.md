@@ -68,7 +68,7 @@
 ```bash
 # 1. Clone and Install
 git clone <your-repo>
-cd t3-chill-sack
+cd t3-chill-stack
 npm install
 
 # 2. Environment Setup
@@ -77,7 +77,7 @@ cp .env.example .env.local
 
 # 3. Database Setup
 npm run prisma:generate
-npm run prisma:migrate
+npm run prisma:reset
 
 # 4. Start Development
 npm run dev
@@ -161,11 +161,12 @@ NEXT_PUBLIC_APP_URL="http://localhost:3000"
 npm run prisma:generate
 ```
 
-#### 2. Run Initial Migration
+#### 2. Reset Database Schema
 
 ```bash
-# Apply database migrations to local instance
-npm run prisma:migrate
+# Reset database schema to local instance
+# Hit 'y' on your keyboard to confirm
+npm run prisma:reset
 ```
 
 This creates tables for users, subscriptions, posts, and comments
@@ -179,7 +180,7 @@ npm run prisma:studio
 
 Opens at `localhost:5555`
 
-### 🌐 Step 3: Production Supabase Setup
+### 🌐 Step 3: Production Supabase Setup (Not necessary to get started)
 
 #### 1. Create Supabase Project
 
@@ -215,7 +216,7 @@ DIRECT_URL="postgresql://postgres.[ref]:[password]@aws-1-us-east-1.pooler.supaba
 npm run prisma:migrate:prod
 ```
 
-### 💳 Step 4: Stripe Integration Setup
+### 💳 Step 4: Stripe Integration Setup (Not necessary to get started)
 
 #### 1. Create Stripe Account & Product
 
@@ -256,6 +257,19 @@ STRIPE_WEBHOOK_SECRET="whsec_..."
 - Click "Subscribe Now"
 - Use test card: `4242 4242 4242 4242`
 - Webhook will update subscription status in real-time
+
+### 🧪 Step 5: Testing
+
+- Start your development server:
+
+```bash
+  npm run dev
+```
+
+- Visit localhost:3000 in your browser.
+- Test authentication flows (sign up, login, password reset).
+- Test protected routes and subscription features.
+- Test Stripe payment flow using the test card: 4242 4242 4242 4242 (If Step 4 has completed).
 
 ## 🔧 Development Commands
 

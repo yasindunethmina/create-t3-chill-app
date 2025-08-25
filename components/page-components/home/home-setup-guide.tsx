@@ -319,10 +319,10 @@ npm run prisma:generate`}
             </div>
 
             <div className="space-y-2">
-              <h4 className="font-semibold">2. Run Initial Migration</h4>
+              <h4 className="font-semibold">2. Reset Database Schema</h4>
               <pre className="text-xs bg-muted p-3 rounded overflow-x-auto">
-                {`# Apply database migrations to local instance
-npm run prisma:migrate`}
+                {`# Reset database schema to local instance
+npm run prisma:reset`}
               </pre>
               <p className="text-sm text-muted-foreground">
                 This creates tables for users, subscriptions, posts, and
@@ -375,7 +375,7 @@ npm run prisma:generate`}
               </div>
               <div>
                 <CardTitle className="text-xl">
-                  🌐 Production Supabase Setup
+                  🌐 Production Supabase Setup (Not necessary to get started)
                 </CardTitle>
                 <CardDescription>
                   Create production database and get credentials
@@ -575,7 +575,7 @@ export function ProductList() {
               </div>
               <div>
                 <CardTitle className="text-xl">
-                  💳 Stripe Integration Setup
+                  💳 Stripe Integration Setup (Not necessary to get started)
                 </CardTitle>
                 <CardDescription>
                   Configure payments and subscriptions
