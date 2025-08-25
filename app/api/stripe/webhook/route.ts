@@ -1,6 +1,6 @@
 import { serverEnv } from "@/lib/env";
 import { prisma } from "@/lib/prisma";
-import { createStripeClient } from "@/lib/stripe";
+import { createStripeClient } from "@/lib/stripe/stripe";
 import { NextRequest, NextResponse } from "next/server";
 import Stripe from "stripe";
 
@@ -17,7 +17,18 @@ const statusMapping = {
   unpaid: "UNPAID",
 } as const;
 
-async function handleSubscriptionUpdate(subscription: Stripe.Subscription) {
+// Type-safe interface for Stripe subscription with period data
+type StripeSubscriptionWithPeriods = Stripe.Subscription & {
+  current_period_start: number;
+  current_period_end: number;
+}
+
+// Type-safe interface for Stripe invoice with subscription
+type StripeInvoiceWithSubscription = Stripe.Invoice & {
+  subscription?: string;
+}
+
+async function handleSubscriptionUpdate(subscription: StripeSubscriptionWithPeriods) {
   const customerId = subscription.customer as string;
 
   // Find user by Stripe customer ID
@@ -56,14 +67,8 @@ async function handleSubscriptionUpdate(subscription: Stripe.Subscription) {
         | "TRIALING"
         | "UNPAID"
         | "INACTIVE",
-      currentPeriodStart: new Date(
-        (subscription as unknown as { current_period_start: number })
-          .current_period_start * 1000,
-      ),
-      currentPeriodEnd: new Date(
-        (subscription as unknown as { current_period_end: number })
-          .current_period_end * 1000,
-      ),
+      currentPeriodStart: new Date(subscription.current_period_start * 1000),
+      currentPeriodEnd: new Date(subscription.current_period_end * 1000),
     },
     create: {
       userId: user.id,
@@ -79,14 +84,8 @@ async function handleSubscriptionUpdate(subscription: Stripe.Subscription) {
         | "TRIALING"
         | "UNPAID"
         | "INACTIVE",
-      currentPeriodStart: new Date(
-        (subscription as unknown as { current_period_start: number })
-          .current_period_start * 1000,
-      ),
-      currentPeriodEnd: new Date(
-        (subscription as unknown as { current_period_end: number })
-          .current_period_end * 1000,
-      ),
+      currentPeriodStart: new Date(subscription.current_period_start * 1000),
+      currentPeriodEnd: new Date(subscription.current_period_end * 1000),
     },
   });
 
@@ -123,27 +122,33 @@ async function handleSubscriptionCancellation(
 
 const eventHandlers: Record<string, (event: Stripe.Event) => Promise<void>> = {
   "customer.subscription.created": async (event) =>
-    handleSubscriptionUpdate(event.data.object as Stripe.Subscription),
+    handleSubscriptionUpdate(event.data.object as StripeSubscriptionWithPeriods),
   "customer.subscription.updated": async (event) =>
-    handleSubscriptionUpdate(event.data.object as Stripe.Subscription),
+    handleSubscriptionUpdate(event.data.object as StripeSubscriptionWithPeriods),
   "customer.subscription.deleted": async (event) =>
     handleSubscriptionCancellation(event.data.object as Stripe.Subscription),
   "invoice.payment_succeeded": async (event) => {
-    const invoice = event.data.object as Stripe.Invoice;
-    const subscriptionId = (invoice as unknown as { subscription?: string })
-      .subscription;
+    const invoice = event.data.object as StripeInvoiceWithSubscription;
+    const subscriptionId = invoice.subscription;
     if (subscriptionId && stripe) {
-      const subscription = await stripe.subscriptions.retrieve(subscriptionId);
-      await handleSubscriptionUpdate(subscription);
+      try {
+        const subscription = await stripe.subscriptions.retrieve(subscriptionId);
+        await handleSubscriptionUpdate(subscription as unknown as StripeSubscriptionWithPeriods);
+      } catch (error) {
+        console.error("Error retrieving subscription for invoice:", error);
+      }
     }
   },
   "invoice.payment_failed": async (event) => {
-    const invoice = event.data.object as Stripe.Invoice;
-    const subscriptionId = (invoice as unknown as { subscription?: string })
-      .subscription;
+    const invoice = event.data.object as StripeInvoiceWithSubscription;
+    const subscriptionId = invoice.subscription;
     if (subscriptionId && stripe) {
-      const subscription = await stripe.subscriptions.retrieve(subscriptionId);
-      await handleSubscriptionUpdate(subscription);
+      try {
+        const subscription = await stripe.subscriptions.retrieve(subscriptionId);
+        await handleSubscriptionUpdate(subscription as unknown as StripeSubscriptionWithPeriods);
+      } catch (error) {
+        console.error("Error retrieving subscription for invoice:", error);
+      }
     }
   },
 };
@@ -160,7 +165,13 @@ export async function POST(req: NextRequest) {
 
   try {
     const body = await req.text();
-    const signature = req.headers.get("stripe-signature")!;
+    const signature = req.headers.get("stripe-signature");
+    
+    if (!signature) {
+      console.error("Missing Stripe signature header");
+      return NextResponse.json({ error: "Missing signature" }, { status: 400 });
+    }
+
     let event: Stripe.Event;
 
     try {

@@ -1,17 +1,12 @@
 "use client";
 
 import { trpcClient } from "@/app/trpc/client";
+import {
+  CheckoutSessionResultT,
+  CreateCheckoutOptionsT,
+  SubscriptionStatusT
+} from "@/lib/stripe/types";
 import { useMemo } from "react";
-
-export type SubscriptionStatusT =
-  | "ACTIVE"
-  | "CANCELED"
-  | "INCOMPLETE"
-  | "INCOMPLETE_EXPIRED"
-  | "PAST_DUE"
-  | "TRIALING"
-  | "UNPAID"
-  | "INACTIVE";
 
 export type UseSubscriptionReturnT = {
   // Status checks
@@ -37,11 +32,7 @@ export type UseSubscriptionReturnT = {
   daysUntilExpiry: number | undefined;
 
   // Actions
-  createCheckoutSession: (options?: {
-    priceId?: string;
-    returnTo?: string;
-    type?: string;
-  }) => Promise<{ url: string | null }>;
+  createCheckoutSession: (options: CreateCheckoutOptionsT) => Promise<CheckoutSessionResultT>;
   isCreatingCheckout: boolean;
 
   // Refetch function
@@ -127,15 +118,11 @@ export function useSubscription(): UseSubscriptionReturnT {
     };
   }, [subscriptionData]);
 
-  const createCheckoutSession = async (options?: {
-    priceId?: string;
-    returnTo?: string;
-    type?: string;
-  }) => {
+  const createCheckoutSession = async (options: CreateCheckoutOptionsT) => {
     return createCheckoutMutation.mutateAsync({
-      priceId: options?.priceId,
-      returnTo: options?.returnTo,
-      type: options?.type,
+      planId: options.planId,
+      returnTo: options.returnTo,
+      type: options.type,
     });
   };
 

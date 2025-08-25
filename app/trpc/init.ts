@@ -2,6 +2,7 @@ import { prisma } from "@/lib/prisma";
 import { createClient as createSupabaseServerClient } from "@/lib/supabase/server";
 import { initTRPC, TRPCError } from "@trpc/server";
 import { cache } from "react";
+
 export const createTRPCContext = cache(async () => {
   /**
    * @see: https://trpc.io/docs/server/context
@@ -11,7 +12,9 @@ export const createTRPCContext = cache(async () => {
   const user = sessionData?.user ?? null;
   return { supabase, user, prisma };
 });
+
 type TRPCContext = Awaited<ReturnType<typeof createTRPCContext>>;
+
 // Avoid exporting the entire t-object
 // since it's not very descriptive.
 // For instance, the use of a t variable
@@ -22,20 +25,28 @@ const t = initTRPC.context<TRPCContext>().create({
    */
   // transformer: superjson,
 });
+
 // Base router and procedure helpers
 export const createTRPCRouter = t.router;
 export const createCallerFactory = t.createCallerFactory;
 export const publicProcedure = t.procedure;
+
 export const authenticatedProcedure = t.procedure.use(async ({ ctx, next }) => {
   if (!ctx.user) {
-    throw new TRPCError({ code: "UNAUTHORIZED" });
+    throw new TRPCError({ 
+      code: "UNAUTHORIZED",
+      message: "You must be logged in to access this resource"
+    });
   }
   return next({ ctx: { ...ctx, user: ctx.user } });
 });
 
 export const subscribedProcedure = t.procedure.use(async ({ ctx, next }) => {
   if (!ctx.user) {
-    throw new TRPCError({ code: "UNAUTHORIZED" });
+    throw new TRPCError({ 
+      code: "UNAUTHORIZED",
+      message: "You must be logged in to access this resource"
+    });
   }
 
   const user = await ctx.prisma.user.findUnique({

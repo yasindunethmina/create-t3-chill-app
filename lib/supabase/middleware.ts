@@ -1,4 +1,9 @@
 import { env } from "@/lib/env";
+import {
+  isAuthenticatedRoute,
+  isPublicRoute,
+  isSubscriptionRequiredRoute,
+} from "@/lib/routes";
 import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
 
@@ -41,16 +46,40 @@ export async function updateSession(request: NextRequest) {
   const { data } = await supabase.auth.getClaims();
   const user = data?.claims;
 
-  if (
-    request.nextUrl.pathname !== "/" &&
-    !user &&
-    !request.nextUrl.pathname.startsWith("/login") &&
-    !request.nextUrl.pathname.startsWith("/auth")
-  ) {
-    // no user, potentially respond by redirecting the user to the login page
+  const { pathname } = request.nextUrl;
+
+  // Allow public routes (no authentication required)
+  if (isPublicRoute(pathname)) {
+    return supabaseResponse;
+  }
+
+  // Check if authentication is required
+  const needsAuth =
+    isAuthenticatedRoute(pathname) || isSubscriptionRequiredRoute(pathname);
+
+  if (needsAuth && !user) {
     const url = request.nextUrl.clone();
     url.pathname = "/auth/login";
     return NextResponse.redirect(url);
+  }
+
+  // Check subscription requirements (only if user is authenticated)
+  // NOTE: This is a safety check only. Pages should verify with getUser()
+  if (isSubscriptionRequiredRoute(pathname) && user) {
+    const { data: subscription } = await supabase
+      .from("subscription")
+      .select("status")
+      .eq("userId", user.sub)
+      .single();
+
+    if (
+      !subscription ||
+      !["ACTIVE", "TRIALING"].includes(subscription.status)
+    ) {
+      const url = request.nextUrl.clone();
+      url.pathname = "/dashboard";
+      return NextResponse.redirect(url);
+    }
   }
 
   // IMPORTANT: You *must* return the supabaseResponse object as it is.

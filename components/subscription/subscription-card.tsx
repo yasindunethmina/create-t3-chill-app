@@ -10,7 +10,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { useSubscription } from "@/hooks/useSubscription";
-import { getDefaultPlan } from "@/lib/stripe";
+import { SUBSCRIPTION_PLANS } from "@/lib/stripe/stripe";
 import { AlertTriangle, Check, Crown, Loader2 } from "lucide-react";
 import { toast } from "sonner";
 
@@ -28,7 +28,8 @@ export function SubscriptionCard() {
   const handleSubscribe = async () => {
     try {
       const result = await createCheckoutSession({
-        returnTo: "/dashboard", // You can customize this based on context
+        planId: "pro",
+        returnTo: "/dashboard",
         type: "subscription",
       });
 
@@ -54,7 +55,7 @@ export function SubscriptionCard() {
     );
   }
 
-  const plan = getDefaultPlan();
+  const plan = SUBSCRIPTION_PLANS.pro;
 
   // Show warning if Stripe is not configured
   if (!stripeEnabled) {

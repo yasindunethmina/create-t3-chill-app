@@ -1,8 +1,6 @@
 import { env, isStripeConfigured } from "@/lib/env";
-import {
-  createStripeClient,
-  getDefaultPlan,
-} from "@/lib/stripe";
+import { createStripeClient, getPlanPriceId } from "@/lib/stripe/stripe";
+import { SubscriptionPlanIdSchema } from "@/lib/stripe/types";
 import { z } from "zod";
 import { authenticatedProcedure, createTRPCRouter } from "../init";
 
@@ -27,9 +25,9 @@ export const subscriptionRouter = createTRPCRouter({
   createCheckoutSession: authenticatedProcedure
     .input(
       z.object({
-        priceId: z.string().optional(),
-        returnTo: z.string().optional().default("/dashboard"),
-        type: z.string().optional().default("subscription"),
+        planId: SubscriptionPlanIdSchema,
+        returnTo: z.string().startsWith("/").default("/dashboard"),
+        type: z.enum(["subscription"]).default("subscription"),
       }),
     )
     .mutation(async ({ ctx, input }) => {
@@ -42,6 +40,11 @@ export const subscriptionRouter = createTRPCRouter({
       const stripe = createStripeClient();
       if (!stripe) {
         throw new Error("Failed to initialize Stripe client");
+      }
+
+      const priceId = getPlanPriceId(input.planId);
+      if (!priceId) {
+        throw new Error("Invalid plan selected");
       }
 
       const user = await ctx.prisma.user.findUnique({
@@ -60,9 +63,6 @@ export const subscriptionRouter = createTRPCRouter({
       ) {
         throw new Error("User already has an active subscription");
       }
-
-      // Use provided priceId or default plan
-      const priceId = input.priceId || getDefaultPlan().priceId;
 
       let customerId = user.subscription?.stripeCustomerId;
 
@@ -108,6 +108,7 @@ export const subscriptionRouter = createTRPCRouter({
         cancel_url: `${env.NEXT_PUBLIC_APP_URL}${input.returnTo}`,
         metadata: {
           userId: user.id,
+          planId: input.planId,
         },
       });
 

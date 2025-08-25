@@ -366,102 +366,12 @@ npm run prisma:generate`}
           </CardContent>
         </Card>
 
-        {/* Step 3: Environment Validation */}
-        <Card className="mb-8">
-          <CardHeader>
-            <div className="flex items-center gap-3">
-              <div className="flex items-center justify-center w-8 h-8 rounded-full bg-yellow-100 text-yellow-600 font-bold">
-                3
-              </div>
-              <div>
-                <CardTitle className="text-xl">
-                  🛡️ Environment Validation System
-                </CardTitle>
-                <CardDescription>
-                  Understand how the Zod-based validation keeps your app safe
-                </CardDescription>
-              </div>
-            </div>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="space-y-2">
-              <h4 className="font-semibold">How It Works</h4>
-              <p className="text-sm text-muted-foreground">
-                The T3 Chill Stack automatically validates all environment
-                variables on startup:
-              </p>
-              <ul className="text-sm text-muted-foreground space-y-1 ml-4">
-                <li>
-                  • <strong>Zod Schemas:</strong> Each variable type has a
-                  validation schema
-                </li>
-                <li>
-                  • <strong>Server/Client Separation:</strong> Automatic
-                  detection and validation
-                </li>
-                <li>
-                  • <strong>Runtime Safety:</strong> Prevents app startup with
-                  missing variables
-                </li>
-                <li>
-                  • <strong>Type Safety:</strong> Full TypeScript support across
-                  contexts
-                </li>
-              </ul>
-            </div>
-
-            <div className="space-y-2">
-              <h4 className="font-semibold">Key Features</h4>
-              <ul className="text-sm text-muted-foreground space-y-1 ml-4">
-                <li>
-                  • <strong>Automatic Context Detection:</strong> Server vs
-                  client validation
-                </li>
-                <li>
-                  • <strong>Type-Safe Access:</strong> Full IntelliSense support
-                  in your editor
-                </li>
-                <li>
-                  • <strong>Required vs Optional:</strong> Database and Supabase
-                  are required, Stripe is optional
-                </li>
-                <li>
-                  • <strong>Production Ready:</strong> Handles both development
-                  and production environments
-                </li>
-              </ul>
-            </div>
-
-            <div className="space-y-2">
-              <h4 className="font-semibold">Benefits</h4>
-              <ul className="text-sm text-muted-foreground space-y-1 ml-4">
-                <li>
-                  • <strong>No Runtime Errors:</strong> Catch missing variables
-                  before app starts
-                </li>
-                <li>
-                  • <strong>Easy Debugging:</strong> Clear messages show exactly
-                  what&apos;s missing
-                </li>
-                <li>
-                  • <strong>Type Safety:</strong> Full IntelliSense support in
-                  your editor
-                </li>
-                <li>
-                  • <strong>Production Ready:</strong> Prevents deployment with
-                  missing config
-                </li>
-              </ul>
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* Step 4: Production Supabase */}
+        {/* Step 3: Production Supabase */}
         <Card className="mb-8">
           <CardHeader>
             <div className="flex items-center gap-3">
               <div className="flex items-center justify-center w-8 h-8 rounded-full bg-green-100 text-green-600 font-bold">
-                4
+                3
               </div>
               <div>
                 <CardTitle className="text-xl">
@@ -549,12 +459,12 @@ NEXT_PUBLIC_SUPABASE_PUBLISHABLE_OR_ANON_KEY="eyJhbGciOiJIUzI1NiIs..."
           </CardContent>
         </Card>
 
-        {/* Step 5: tRPC */}
+        {/* Step 4: tRPC */}
         <Card className="mb-8">
           <CardHeader>
             <div className="flex items-center gap-3">
               <div className="flex items-center justify-center w-8 h-8 rounded-full bg-orange-100 text-orange-600 font-bold">
-                5
+                4
               </div>
               <div>
                 <CardTitle className="text-xl">
@@ -656,12 +566,12 @@ export function ProductList() {
           </CardContent>
         </Card>
 
-        {/* Step 6: Stripe Integration */}
+        {/* Step 5: Stripe Integration */}
         <Card className="mb-8">
           <CardHeader>
             <div className="flex items-center gap-3">
               <div className="flex items-center justify-center w-8 h-8 rounded-full bg-orange-100 text-zinc-600 font-bold">
-                6
+                5
               </div>
               <div>
                 <CardTitle className="text-xl">
@@ -750,6 +660,96 @@ STRIPE_WEBHOOK_SECRET="whsec_..."`}
                   </code>
                 </li>
                 <li>• Webhook will update subscription status in real-time</li>
+              </ul>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Step 6: Environment Validation */}
+        <Card className="mb-8">
+          <CardHeader>
+            <div className="flex items-center gap-3">
+              <div className="flex items-center justify-center w-8 h-8 rounded-full bg-yellow-100 text-yellow-600 font-bold">
+                6
+              </div>
+              <div>
+                <CardTitle className="text-xl">
+                  🛡️ Environment Validation System
+                </CardTitle>
+                <CardDescription>
+                  Understand how the Zod-based validation keeps your app safe
+                </CardDescription>
+              </div>
+            </div>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <div className="space-y-2">
+              <h4 className="font-semibold">How It Works</h4>
+              <p className="text-sm text-muted-foreground">
+                The T3 Chill Stack automatically validates all environment
+                variables on startup:
+              </p>
+              <ul className="text-sm text-muted-foreground space-y-1 ml-4">
+                <li>
+                  • <strong>Zod Schemas:</strong> Each variable type has a
+                  validation schema
+                </li>
+                <li>
+                  • <strong>Server/Client Separation:</strong> Automatic
+                  detection and validation
+                </li>
+                <li>
+                  • <strong>Runtime Safety:</strong> Prevents app startup with
+                  missing variables
+                </li>
+                <li>
+                  • <strong>Type Safety:</strong> Full TypeScript support across
+                  contexts
+                </li>
+              </ul>
+            </div>
+
+            <div className="space-y-2">
+              <h4 className="font-semibold">Key Features</h4>
+              <ul className="text-sm text-muted-foreground space-y-1 ml-4">
+                <li>
+                  • <strong>Automatic Context Detection:</strong> Server vs
+                  client validation
+                </li>
+                <li>
+                  • <strong>Type-Safe Access:</strong> Full IntelliSense support
+                  in your editor
+                </li>
+                <li>
+                  • <strong>Required vs Optional:</strong> Database and Supabase
+                  are required, Stripe is optional
+                </li>
+                <li>
+                  • <strong>Production Ready:</strong> Handles both development
+                  and production environments
+                </li>
+              </ul>
+            </div>
+
+            <div className="space-y-2">
+              <h4 className="font-semibold">Benefits</h4>
+              <ul className="text-sm text-muted-foreground space-y-1 ml-4">
+                <li>
+                  • <strong>No Runtime Errors:</strong> Catch missing variables
+                  before app starts
+                </li>
+                <li>
+                  • <strong>Easy Debugging:</strong> Clear messages show exactly
+                  what&apos;s missing
+                </li>
+                <li>
+                  • <strong>Type Safety:</strong> Full IntelliSense support in
+                  your editor
+                </li>
+                <li>
+                  • <strong>Production Ready:</strong> Prevents deployment with
+                  missing config
+                </li>
               </ul>
             </div>
           </CardContent>
