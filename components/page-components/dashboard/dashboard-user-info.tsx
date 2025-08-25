@@ -1,17 +1,11 @@
+import { trpcServer } from "@/app/trpc/server";
 import { SubscriptionStatusBadge } from "@/components/subscription/subscription-status-badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Zap } from "lucide-react";
 
-type DashboardUserInfoProps = {
-  profile: {
-    email?: string | null;
-    subscription?: {
-      createdAt?: Date | null;
-    } | null;
-  } | null;
-};
+export async function DashboardUserInfo() {
+  const profile = await trpcServer.user.getProfile();
 
-export function DashboardUserInfo({ profile }: DashboardUserInfoProps) {
   return (
     <Card>
       <CardHeader>

@@ -7,7 +7,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { createClient } from "@/lib/supabase/server";
+import { getUser } from "@/lib/supabase/get-user";
 import { Loader2, XCircle } from "lucide-react";
 import Link from "next/link";
 import { redirect } from "next/navigation";
@@ -23,10 +23,9 @@ type RedirectPageProps = {
 export default async function RedirectPage({
   searchParams,
 }: RedirectPageProps) {
-  const supabase = await createClient();
-  const { data, error } = await supabase.auth.getClaims();
+  const user = await getUser();
 
-  if (error || !data?.claims) {
+  if (!user) {
     redirect("/auth/login");
   }
 

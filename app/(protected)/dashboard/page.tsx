@@ -1,20 +1,16 @@
-import { trpcServer } from "@/app/trpc/server";
 import { DashboardFeatures } from "@/components/page-components/dashboard/dashboard-features";
 import { DashboardUserInfo } from "@/components/page-components/dashboard/dashboard-user-info";
 import { ProFeaturesCard } from "@/components/subscription/pro-features-card";
 import { SubscriptionCard } from "@/components/subscription/subscription-card";
-import { createClient } from "@/lib/supabase/server";
+import { getUser } from "@/lib/supabase/get-user";
 import { redirect } from "next/navigation";
 
 export default async function ProtectedPage() {
-  const supabase = await createClient();
+  const user = await getUser();
 
-  const { data, error } = await supabase.auth.getUser();
-  if (error || !data?.user) {
+  if (!user) {
     redirect("/auth/login");
   }
-
-  const profile = await trpcServer.user.getProfile();
 
   return (
     <div className="container mx-auto my-16 max-w-6xl">
@@ -30,7 +26,7 @@ export default async function ProtectedPage() {
         </div>
 
         {/* User Info */}
-        <DashboardUserInfo profile={profile} />
+        <DashboardUserInfo />
 
         {/* Stripe Integration Demo */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">

@@ -1,6 +1,8 @@
 import { Footer } from "@/components/shared/footer";
 import MenuTop from "@/components/shared/menu-top";
 import { env } from "@/lib/env";
+import { getUser } from "@/lib/supabase/get-user";
+import { AuthProvider } from "@/providers/auth-provider";
 import type { Metadata } from "next";
 import { ThemeProvider } from "next-themes";
 import { Geist } from "next/font/google";
@@ -23,11 +25,13 @@ const geistSans = Geist({
   subsets: ["latin"],
 });
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const user = await getUser(); 
+
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${geistSans.className} antialiased`}>
@@ -38,9 +42,11 @@ export default function RootLayout({
         >
           <TRPCProvider>
             <HydrateClient>
+              <AuthProvider initialUser={user}>
               <MenuTop />
               <main>{children}</main>
               <Footer />
+              </AuthProvider>
             </HydrateClient>
           </TRPCProvider>
           <Toaster position="bottom-right" richColors closeButton />
