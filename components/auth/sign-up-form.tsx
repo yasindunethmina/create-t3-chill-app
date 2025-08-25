@@ -43,9 +43,6 @@ export function SignUpForm({
       const { error } = await supabase.auth.signUp({
         email,
         password,
-        options: {
-          emailRedirectTo: `${window.location.origin}/dashboard`,
-        },
       });
       if (error) throw error;
       router.push("/auth/sign-up-success");

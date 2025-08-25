@@ -1,6 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
-export default async function Page({
+export default async function AuthErrorPage({
   searchParams,
 }: {
   searchParams: Promise<{ error: string }>;
@@ -8,7 +8,7 @@ export default async function Page({
   const params = await searchParams;
 
   return (
-    <div className="flex min-h-svh w-full items-center justify-center p-6 md:p-10 text-center">
+    <div className="flex my-20 w-full items-center justify-center text-center">
       <div className="w-full max-w-sm">
         <div className="flex flex-col gap-6">
           <Card>

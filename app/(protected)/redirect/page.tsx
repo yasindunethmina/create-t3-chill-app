@@ -60,7 +60,7 @@ export default async function RedirectPage({
 
       // Error occurred during verification
       return (
-        <div className="mt-16 flex items-center justify-center p-4">
+        <div className="my-20 flex items-center justify-center">
           <Card className="w-full max-w-md border-red-200 dark:border-red-800">
             <CardHeader className="text-center">
               <div className="mx-auto w-12 h-12 bg-red-100 dark:bg-red-900 rounded-full flex items-center justify-center mb-4">
@@ -102,7 +102,7 @@ export default async function RedirectPage({
 
   // Default loading state while processing
   return (
-    <div className="mt-16 flex items-center justify-center p-4">
+    <div className="my-20 flex items-center justify-center">
       <Card className="w-full max-w-md">
         <CardHeader className="text-center">
           <div className="mx-auto w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mb-4">
