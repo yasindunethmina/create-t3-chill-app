@@ -1,4 +1,9 @@
-import { authenticatedProcedure, createTRPCRouter, publicProcedure, subscribedProcedure } from "../init";
+import {
+  authenticatedProcedure,
+  createTRPCRouter,
+  publicProcedure,
+  subscribedProcedure,
+} from "../init";
 
 export const userRouter = createTRPCRouter({
   // Test procedures
@@ -10,7 +15,7 @@ export const userRouter = createTRPCRouter({
 
   // User procedures
   getProfile: authenticatedProcedure.query(async ({ ctx }) => {
-    const profile = await ctx.prisma.user.findUnique({
+    const profile = await ctx.prisma.profile.findUnique({
       where: { id: ctx.user.id },
       include: {
         subscription: true,

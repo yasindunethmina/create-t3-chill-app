@@ -8,10 +8,11 @@ datasource db {
   directUrl = env("DIRECT_URL")
 }
 
-model user {
-  id           String        @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  name         String
-  email        String        @unique
+model profile {
+  id           String        @id @db.Uuid
+  email        String?       @unique
+  displayName  String?
+  avatarUrl    String?
   posts        post[]
   comments     comment[]
   likedPosts   post[]        @relation(name: "liked_posts")
@@ -19,16 +20,16 @@ model user {
 }
 
 model subscription {
-  id                   String             @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  id                   String             @id @default(uuid()) @db.Uuid
   userId               String             @unique @db.Uuid
-  user                 user               @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user                 profile            @relation(fields: [userId], references: [id], onDelete: Cascade)
   stripeCustomerId     String?            @unique
   stripeSubscriptionId String?            @unique
   stripePriceId        String?
   status               SubscriptionStatus @default(INACTIVE)
   currentPeriodStart   DateTime?
   currentPeriodEnd     DateTime?
-  createdAt            DateTime           @default(dbgenerated("now()"))
+  createdAt            DateTime           @default(now())
   updatedAt            DateTime           @updatedAt
 }
 
@@ -44,21 +45,21 @@ enum SubscriptionStatus {
 }
 
 model post {
-  id        String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  id        String    @id @default(uuid()) @db.Uuid
   title     String
   text      String
-  createdAt DateTime  @default(dbgenerated("now()"))
-  author    user      @relation(fields: [authorId], references: [id])
+  createdAt DateTime  @default(now())
+  author    profile   @relation(fields: [authorId], references: [id])
   authorId  String    @db.Uuid
   comments  comment[]
-  likedBy   user[]    @relation(name: "liked_posts")
+  likedBy   profile[] @relation(name: "liked_posts")
 }
 
 model comment {
-  id        String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  id        String   @id @default(uuid()) @db.Uuid
   text      String
-  createdAt DateTime @default(dbgenerated("now()"))
-  author    user     @relation(fields: [authorId], references: [id])
+  createdAt DateTime @default(now())
+  author    profile  @relation(fields: [authorId], references: [id])
   authorId  String   @db.Uuid
   post      post     @relation(fields: [postId], references: [id])
   postId    String   @db.Uuid

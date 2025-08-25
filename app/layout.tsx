@@ -30,7 +30,7 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const user = await getUser(); 
+  const user = await getUser();
 
   return (
     <html lang="en" suppressHydrationWarning>
@@ -43,9 +43,9 @@ export default async function RootLayout({
           <TRPCProvider>
             <HydrateClient>
               <AuthProvider initialUser={user}>
-              <MenuTop />
-              <main>{children}</main>
-              <Footer />
+                <MenuTop />
+                <main>{children}</main>
+                <Footer />
               </AuthProvider>
             </HydrateClient>
           </TRPCProvider>

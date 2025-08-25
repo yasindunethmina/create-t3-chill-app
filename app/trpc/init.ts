@@ -49,15 +49,15 @@ export const subscribedProcedure = t.procedure.use(async ({ ctx, next }) => {
     });
   }
 
-  const user = await ctx.prisma.user.findUnique({
+  const profile = await ctx.prisma.profile.findUnique({
     where: { id: ctx.user.id },
     include: { subscription: true },
   });
 
   if (
-    !user?.subscription ||
-    (user.subscription.status !== "ACTIVE" &&
-      user.subscription.status !== "TRIALING")
+    !profile?.subscription ||
+    (profile.subscription.status !== "ACTIVE" &&
+      profile.subscription.status !== "TRIALING")
   ) {
     throw new TRPCError({
       code: "FORBIDDEN",
@@ -69,7 +69,7 @@ export const subscribedProcedure = t.procedure.use(async ({ ctx, next }) => {
     ctx: {
       ...ctx,
       user: ctx.user,
-      subscription: user.subscription,
+      subscription: profile.subscription,
     },
   });
 });

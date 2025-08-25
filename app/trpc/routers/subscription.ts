@@ -6,18 +6,18 @@ import { authenticatedProcedure, createTRPCRouter } from "../init";
 
 export const subscriptionRouter = createTRPCRouter({
   getSubscriptionStatus: authenticatedProcedure.query(async ({ ctx }) => {
-    const user = await ctx.prisma.user.findUnique({
+    const profile = await ctx.prisma.profile.findUnique({
       where: { id: ctx.user.id },
       include: { subscription: true },
     });
 
-    const status = user?.subscription?.status || "INACTIVE";
+    const status = profile?.subscription?.status || "INACTIVE";
     const isSubscribed = status === "ACTIVE" || status === "TRIALING";
 
     return {
       isSubscribed,
       status,
-      currentPeriodEnd: user?.subscription?.currentPeriodEnd,
+      currentPeriodEnd: profile?.subscription?.currentPeriodEnd,
       stripeEnabled: isStripeConfigured(),
     };
   }),
@@ -47,41 +47,41 @@ export const subscriptionRouter = createTRPCRouter({
         throw new Error("Invalid plan selected");
       }
 
-      const user = await ctx.prisma.user.findUnique({
+      const profile = await ctx.prisma.profile.findUnique({
         where: { id: ctx.user.id },
         include: { subscription: true },
       });
 
-      if (!user) {
-        throw new Error("User not found");
+      if (!profile) {
+        throw new Error("Profile not found");
       }
 
       // Check if user already has an active subscription
       if (
-        user.subscription?.status === "ACTIVE" ||
-        user.subscription?.status === "TRIALING"
+        profile.subscription?.status === "ACTIVE" ||
+        profile.subscription?.status === "TRIALING"
       ) {
         throw new Error("User already has an active subscription");
       }
 
-      let customerId = user.subscription?.stripeCustomerId;
+      let customerId = profile.subscription?.stripeCustomerId;
 
       // Create Stripe customer if doesn't exist
       if (!customerId) {
         const customer = await stripe.customers.create({
-          email: user.email,
+          email: ctx.user.email,
           metadata: {
-            userId: user.id,
+            userId: profile.id,
           },
         });
         customerId = customer.id;
 
         // Update or create subscription record
         await ctx.prisma.subscription.upsert({
-          where: { userId: user.id },
+          where: { userId: profile.id },
           update: { stripeCustomerId: customerId },
           create: {
-            userId: user.id,
+            userId: profile.id,
             stripeCustomerId: customerId,
             status: "INACTIVE",
           },
@@ -107,7 +107,7 @@ export const subscriptionRouter = createTRPCRouter({
         )}&return_to=${encodeURIComponent(input.returnTo)}`,
         cancel_url: `${env.NEXT_PUBLIC_APP_URL}${input.returnTo}`,
         metadata: {
-          userId: user.id,
+          userId: profile.id,
           planId: input.planId,
         },
       });

@@ -21,18 +21,20 @@ const statusMapping = {
 type StripeSubscriptionWithPeriods = Stripe.Subscription & {
   current_period_start: number;
   current_period_end: number;
-}
+};
 
 // Type-safe interface for Stripe invoice with subscription
 type StripeInvoiceWithSubscription = Stripe.Invoice & {
   subscription?: string;
-}
+};
 
-async function handleSubscriptionUpdate(subscription: StripeSubscriptionWithPeriods) {
+async function handleSubscriptionUpdate(
+  subscription: StripeSubscriptionWithPeriods,
+) {
   const customerId = subscription.customer as string;
 
-  // Find user by Stripe customer ID
-  const user = await prisma.user.findFirst({
+  // Find profile by Stripe customer ID
+  const profile = await prisma.profile.findFirst({
     where: {
       subscription: {
         stripeCustomerId: customerId,
@@ -43,8 +45,8 @@ async function handleSubscriptionUpdate(subscription: StripeSubscriptionWithPeri
     },
   });
 
-  if (!user) {
-    console.error("User not found for customer:", customerId);
+  if (!profile) {
+    console.error("Profile not found for customer:", customerId);
     return;
   }
 
@@ -54,7 +56,7 @@ async function handleSubscriptionUpdate(subscription: StripeSubscriptionWithPeri
 
   // Update subscription in database
   await prisma.subscription.upsert({
-    where: { userId: user.id },
+    where: { userId: profile.id },
     update: {
       stripeSubscriptionId: subscription.id,
       stripePriceId: subscription.items.data[0]?.price.id,
@@ -71,7 +73,7 @@ async function handleSubscriptionUpdate(subscription: StripeSubscriptionWithPeri
       currentPeriodEnd: new Date(subscription.current_period_end * 1000),
     },
     create: {
-      userId: user.id,
+      userId: profile.id,
       stripeCustomerId: customerId,
       stripeSubscriptionId: subscription.id,
       stripePriceId: subscription.items.data[0]?.price.id,
@@ -89,7 +91,9 @@ async function handleSubscriptionUpdate(subscription: StripeSubscriptionWithPeri
     },
   });
 
-  console.log(`Updated subscription for user ${user.id}: ${mappedStatus}`);
+  console.log(
+    `Updated subscription for profile ${profile.id}: ${mappedStatus}`,
+  );
 }
 
 async function handleSubscriptionCancellation(
@@ -97,7 +101,7 @@ async function handleSubscriptionCancellation(
 ) {
   const customerId = subscription.customer as string;
 
-  const user = await prisma.user.findFirst({
+  const profile = await prisma.profile.findFirst({
     where: {
       subscription: {
         stripeCustomerId: customerId,
@@ -105,26 +109,30 @@ async function handleSubscriptionCancellation(
     },
   });
 
-  if (!user) {
-    console.error("User not found for customer:", customerId);
+  if (!profile) {
+    console.error("Profile not found for customer:", customerId);
     return;
   }
 
   await prisma.subscription.update({
-    where: { userId: user.id },
+    where: { userId: profile.id },
     data: {
       status: "CANCELED",
     },
   });
 
-  console.log(`Canceled subscription for user ${user.id}`);
+  console.log(`Canceled subscription for profile ${profile.id}`);
 }
 
 const eventHandlers: Record<string, (event: Stripe.Event) => Promise<void>> = {
   "customer.subscription.created": async (event) =>
-    handleSubscriptionUpdate(event.data.object as StripeSubscriptionWithPeriods),
+    handleSubscriptionUpdate(
+      event.data.object as StripeSubscriptionWithPeriods,
+    ),
   "customer.subscription.updated": async (event) =>
-    handleSubscriptionUpdate(event.data.object as StripeSubscriptionWithPeriods),
+    handleSubscriptionUpdate(
+      event.data.object as StripeSubscriptionWithPeriods,
+    ),
   "customer.subscription.deleted": async (event) =>
     handleSubscriptionCancellation(event.data.object as Stripe.Subscription),
   "invoice.payment_succeeded": async (event) => {
@@ -132,8 +140,11 @@ const eventHandlers: Record<string, (event: Stripe.Event) => Promise<void>> = {
     const subscriptionId = invoice.subscription;
     if (subscriptionId && stripe) {
       try {
-        const subscription = await stripe.subscriptions.retrieve(subscriptionId);
-        await handleSubscriptionUpdate(subscription as unknown as StripeSubscriptionWithPeriods);
+        const subscription =
+          await stripe.subscriptions.retrieve(subscriptionId);
+        await handleSubscriptionUpdate(
+          subscription as unknown as StripeSubscriptionWithPeriods,
+        );
       } catch (error) {
         console.error("Error retrieving subscription for invoice:", error);
       }
@@ -144,8 +155,11 @@ const eventHandlers: Record<string, (event: Stripe.Event) => Promise<void>> = {
     const subscriptionId = invoice.subscription;
     if (subscriptionId && stripe) {
       try {
-        const subscription = await stripe.subscriptions.retrieve(subscriptionId);
-        await handleSubscriptionUpdate(subscription as unknown as StripeSubscriptionWithPeriods);
+        const subscription =
+          await stripe.subscriptions.retrieve(subscriptionId);
+        await handleSubscriptionUpdate(
+          subscription as unknown as StripeSubscriptionWithPeriods,
+        );
       } catch (error) {
         console.error("Error retrieving subscription for invoice:", error);
       }
@@ -166,7 +180,7 @@ export async function POST(req: NextRequest) {
   try {
     const body = await req.text();
     const signature = req.headers.get("stripe-signature");
-    
+
     if (!signature) {
       console.error("Missing Stripe signature header");
       return NextResponse.json({ error: "Missing signature" }, { status: 400 });
