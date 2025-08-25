@@ -67,7 +67,7 @@
 
 ```bash
 # 1. Clone and Install
-git clone <your-repo>
+git clone <your-repo> or run npx create-t3-chill-app
 cd t3-chill-stack
 npm install
 
