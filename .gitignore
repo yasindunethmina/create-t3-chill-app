@@ -43,3 +43,8 @@ yarn-error.log*
 next-env.d.ts
 
 /generated/prisma
+
+# CLI
+/cli/dist
+/cli/node_modules
+/cli/my-t3-chill-app

@@ -6,6 +6,12 @@
 <p>Ideal for developers and founders who want to start building or prototyping quickly with less effort.</p>
 
 <div align="center">
+  <h3>🚀 Quick Start</h3>
+  <p><strong>Create a new project in seconds:</strong></p>
+  <code>npx create-t3-chill-app my-t3-chill-app</code>
+</div>
+
+<div align="center">
   <p><em>Starter Kit Preview</em></p>
   <img width="2800" height="3464" alt="localhost_3000_dashboard (1)" src="https://github.com/user-attachments/assets/9eae1fa7-646e-4ee8-b6ea-1407f7548222" />
 </div>
@@ -65,10 +71,24 @@
 
 ## 🎯 Quick Start
 
+### Option 1: Use the Create Package (Recommended)
+
+```bash
+# Create a new project with T3 Chill Stack
+npx create-t3-chill-app my-t3-chill-app
+
+# Navigate to your project
+cd my-t3-chill-app
+
+# Follow the setup guide at http://localhost:3000
+```
+
+### Option 2: Clone the Repository
+
 ```bash
 # 1. Clone and Install
-git clone <your-repo> or run npx create-t3-chill-app
-cd t3-chill-stack
+git clone <your-repo>
+cd create-t3-chill-app
 npm install
 
 # 2. Environment Setup
@@ -387,7 +407,7 @@ For detailed setup instructions and troubleshooting, visit your app's homepage a
 
 ## 🆘 Support
 
-- File issues on [GitHub](https://github.com/yasindunethmina/t3-chill-stack/issues)
+- File issues on [GitHub](https://github.com/yasindunethmina/create-t3-chill-app/issues)
 
 ## 🔗 Resources
 
