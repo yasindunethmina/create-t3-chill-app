@@ -1,5 +1,8 @@
 import { z } from "zod";
 
+// Type for plan IDs (references the comprehensive plan definitions from Stripe)
+export const SubscriptionPlanIdSchema = z.enum(["pro"]);
+
 // Subscription Status Types
 export type SubscriptionStatusT =
   | "ACTIVE"
@@ -10,9 +13,6 @@ export type SubscriptionStatusT =
   | "TRIALING"
   | "UNPAID"
   | "INACTIVE";
-
-// Type for plan IDs (references the comprehensive plan definitions from Stripe)
-export const SubscriptionPlanIdSchema = z.enum(["pro"]);
 
 // Subscription Data Structure
 export type SubscriptionDataT = {
@@ -33,3 +33,8 @@ export type CreateCheckoutOptionsT = {
 export type CheckoutSessionResultT = {
   url: string | null;
 };
+
+// Stripe Verify Result
+export type StripeVerifyResultT =
+  | { success: boolean; alreadyActive: boolean; recovered?: undefined }
+  | { success: boolean; recovered: boolean; alreadyActive?: undefined };
