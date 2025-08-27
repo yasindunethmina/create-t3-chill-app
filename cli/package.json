@@ -1,7 +1,7 @@
 {
   "name": "create-t3-chill-app",
   "version": "1.0.0",
-  "description": "Build a project with Next.js, Supabase, tRPC, Prisma, and Stripe using the Create T3 Chill App CLI",
+  "description": "Build a project with Next.js, Supabase, tRPC, Prisma, and Stripe using the Create T3 Chill App",
   "main": "dist/index.js",
   "bin": {
     "create-t3-chill-app": "./dist/index.js"
