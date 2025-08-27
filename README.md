@@ -8,7 +8,8 @@ The fastest way to ship products with a modern stack. Skip the setup and focus o
 
 ## 🚀 Quick Start (Recommended)
 
-**Create a new project in seconds:**
+**Create a new project in seconds:** <br>
+_(If not working try npx create-t3-chill-app-dev)_
 
 <div align="center">
   
@@ -23,46 +24,67 @@ npx create-t3-chill-app
 
 ## ✨ Features
 
+### ⚡️ Instant Project Setup with CLI
+
+- **Streamlined CLI tool:** Quickly scaffold your project with `npx create-t3-chill-app`
+- **Environment checks:** Ensures Node.js and Docker are ready before scaffolding
+- **Guided setup:** Walks you through environment variables, Supabase, and Stripe integration
+- **Flexible options:** Skip dependency install or Supabase setup with CLI flags
+- **Automatic local Supabase:** Instantly spins up a local database for development
+
 ### 🔐 Authentication & Security
 
-- Complete authentication system with Supabase
-- Email/password authentication, sign up, login, password reset, and email confirmation flows
-- Protected routes with automatic redirects and session management
+- **Full authentication system:** Powered by Supabase
+- **Email/password flows:** Sign up, login, password reset, and email confirmation
+- **Protected routes:** Automatic redirects and session management for secure access
+- **Session management:** Works seamlessly across server and client
 
 ### 🗄️ Database & ORM
 
-- Prisma ORM with PostgreSQL via Supabase
-- Type-safe database queries and auto-generated TypeScript types
-- Effortless schema management and migrations
-- Seamless local-to-production migration workflow
-- Pre-configured schema for subscriptions
+- **PostgreSQL via Supabase:** Production-ready database out of the box
+- **Prisma ORM:** Type-safe queries and auto-generated TypeScript types
+- **Pre-configured schema:** Includes users and subscriptions tables
+- **Effortless migrations:** Simple schema management and migration workflow
+- **Local-to-production ready:** Seamless migration from local to cloud
 
 ### 🔄 Type-Safe APIs
 
-- tRPC for end-to-end type safety
-- Separate public, authenticated, and subscribed procedures
-- Server-side and client-side data fetching
-- Automatic type generation and validation
+- **tRPC integration:** End-to-end type safety for your APIs
+- **Three procedure types:** `publicProcedure`, `authenticatedProcedure`, `subscribedProcedure`
+- **Server & client data fetching:** Consistent types everywhere
+- **Automatic type generation:** Ensures validation and safety across your stack
 
 ### 💳 Payments & Subscriptions
 
-- Complete Stripe integration for payments and subscriptions
-- Subscription management with webhooks and protected content
-- Safe fallbacks for webhook failures to verify transactions
-- Clean subscription UI components
+- **Stripe integration:** Complete payment and subscription management
+- **Webhook handling:** Real-time updates and safe fallbacks for failures
+- **Protected content:** Restrict access based on subscription status
+- **Clean UI components:** Subscription management and payment flows
+
+### 🛡️ Environment Validation System
+
+- **Zod-based validation:** Type-safe access to environment variables
+- **Automatic separation:** Handles both server and client variables
+- **Prevents runtime errors:** Ensures all required config is present
 
 ### 🎨 UI & Styling
 
-- Tailwind CSS for rapid styling
-- shadcn/ui components for modern design
-- Responsive design patterns and modern component architecture
-- Custom subscription hook (`useSubscription`)
+- **Tailwind CSS:** Rapid, utility-first styling
+- **shadcn/ui components:** Modern, accessible UI out of the box
+- **Component architecture:** Clean, maintainable, and scalable
+- **Custom hooks:** Includes `useSubscription` for easy subscription state
 
 ### 🚀 Deploy Ready
 
-- Optimized for Vercel deployment
-- Environment variables pre-configured for local and production
-- Edge runtime support
+- **Optimized for Vercel:** Edge runtime support and pre-configured environment variables
+- **Production migration:** Simple commands for deploying and migrating your database
+- **Easy Stripe webhooks:** Ready for production with secure webhook endpoints
+
+### 🧪 Testing & Development
+
+- **Comprehensive testing:** Authentication, protected routes, and payment flows
+- **Dev commands:** Start, reset, and manage your database and app with simple scripts
+- **Prisma Studio:** Visual database management included
 
 ---
 
