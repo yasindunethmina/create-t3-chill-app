@@ -1,6 +1,6 @@
 import { build } from "esbuild";
 import { existsSync } from "fs";
-import { copyFile, mkdir, readdir, writeFile } from "fs/promises";
+import { copyFile, mkdir, readdir } from "fs/promises";
 import { join } from "path";
 
 async function copyDir(src: string, dest: string) {
@@ -108,6 +108,7 @@ async function buildCLI() {
       "middleware.ts",
       "prisma.config.ts",
       ".gitignore",
+      ".npmignore",
       ".prettierrc",
       "STRIPE_SETUP.md",
       "README.md",
@@ -152,55 +153,6 @@ async function buildCLI() {
         console.log(`⚠️  ${dir} directory not found, skipping...`);
       }
     }
-
-    // Create a project-specific .gitignore for generated projects
-    console.log("📝 Creating .gitignore for generated projects...");
-    const projectGitignoreContent = `# Dependencies
-node_modules/
-.pnp
-.pnp.js
-
-# Next.js build output
-.next/
-out/
-build/
-
-# Environment files
-.env
-.env.local
-.env.production
-
-# TypeScript build info
-*.tsbuildinfo
-
-# Supabase (local dev artifacts)
-supabase/.branches/
-supabase/.temp/
-
-# IDE/editor folders
-.vscode/
-.idea/
-
-# OS
-.DS_Store
-Thumbs.db
-
-# Logs
-*.log
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-
-# Coverage
-coverage/
-.nyc_output
-
-# Cache
-.cache/
-.parcel-cache/
-`;
-    await writeFile("template/.gitignore", projectGitignoreContent);
-    console.log("✅ .gitignore created for generated projects");
 
     console.log("🎉 Build completed successfully!");
   } catch (error) {
