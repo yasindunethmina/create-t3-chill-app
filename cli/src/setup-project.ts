@@ -615,5 +615,5 @@ export async function setupProject(
   );
   console.log(chalk.cyan("  X (Twitter): https://x.com/yasinduneth"));
   console.log(chalk.cyan("  LinkedIn:   https://linkedin.com/in/yasinduneth"));
-  console.log(chalk.gray("\nThank you for using T3 Chill Stack! 🙏"));
+  console.log(chalk.gray("\nThank you for using T3 Chill Stack! 🙏\n"));
 }
