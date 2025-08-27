@@ -1,20 +1,25 @@
-## 🚀 Create T3 Chill App — Everything You Need in a Minimal, Powerful Stack
+## 💡 Create T3 Chill App — Everything You Need in a Minimal, Powerful Stack
 
 **Next.js • Supabase • tRPC • Prisma • Stripe**
 
-<p>The fastest way to ship products with a modern stack. Skip the setup and focus on building your product.</p>
-<p>Ideal for developers and founders who want to start building or prototyping quickly with less effort.</p>
+The fastest way to ship products with a modern stack. Skip the setup and focus on building your product. <br> **Ideal for developers and founders who want to start building or prototyping quickly with less effort.**
+
+---
+
+## 🚀 Quick Start (Recommended)
+
+**Create a new project in seconds:**
 
 <div align="center">
-  <h3>🚀 Quick Start</h3>
-  <p><strong>Create a new project in seconds:</strong></p>
-  <code>npx create-t3-chill-app my-t3-chill-app</code>
+  
+```bash
+npx create-t3-chill-app
+```
+
+<img width="759" height="884" alt="create-t3-chill-app-cli" src="https://github.com/user-attachments/assets/bda2cdbe-b87a-4f14-a457-67644b43bee7" />
 </div>
 
-<div align="center">
-  <p><em>Starter Kit Preview</em></p>
-  <img width="2800" height="3464" alt="localhost_3000_dashboard (1)" src="https://github.com/user-attachments/assets/9eae1fa7-646e-4ee8-b6ea-1407f7548222" />
-</div>
+---
 
 ## ✨ Features
 
@@ -35,7 +40,7 @@
 ### 🔄 Type-Safe APIs
 
 - tRPC for end-to-end type safety
-- Separate public, authenticated, and subscribed procedures methods
+- Separate public, authenticated, and subscribed procedures
 - Server-side and client-side data fetching
 - Automatic type generation and validation
 
@@ -51,7 +56,7 @@
 - Tailwind CSS for rapid styling
 - shadcn/ui components for modern design
 - Responsive design patterns and modern component architecture
-- Custom subscription hook (useSubscription)
+- Custom subscription hook (`useSubscription`)
 
 ### 🚀 Deploy Ready
 
@@ -59,241 +64,165 @@
 - Environment variables pre-configured for local and production
 - Edge runtime support
 
+---
+
+<div align="center">
+  <p>Home Page</p>
+  <img width="2500" height="2996" alt="Starter Kit Home Page" src="https://github.com/user-attachments/assets/dd437255-9109-473a-825c-1954ea323932" />
+</div>
 <br>
 <div align="center">
-  <p><em>Protected Dashboard Example (Before Subscription)</em></p>
-  <img width="2800" height="2888" alt="localhost_3000_dashboard" src="https://github.com/user-attachments/assets/d87c2b69-8107-4da8-8f49-b4d09f6f9535" />
+  <p>Protected Dashboard (Before Subscription)</p>
+  <img width="2500" height="2860" alt="Protected Dashboard (Before Subscription)" src="https://github.com/user-attachments/assets/9e8d610b-7c28-404e-81b6-7ae828089053" />
+  <br>
 </div>
+<br>
 <div align="center">
-  <p><em>Protected Dashboard Example (With Active Subscription)</em></p>
-  <img width="2800" height="2600" alt="localhost_3000_dashboard (2)" src="https://github.com/user-attachments/assets/bdb275c9-6492-4898-832b-d08004f34cc6" />
+  <p>Protected Dashboard (After Subscription)</p>
+  <img width="2500" height="2694" alt="Protected Dashboard (After Subscription)" src="https://github.com/user-attachments/assets/07939d8a-c4b0-491d-8370-cd9c0138bc8c" />
+  <br>
 </div>
 
-## 🎯 Quick Start
+---
 
-### Option 1: Use the Create Package (Recommended)
+## 📦 Installation
+
+### 🚀 1. Create a New Project (Recommended)
+
+> **This is the fastest and easiest way to get started.**
 
 ```bash
-# Create a new project with Create T3 Chill App
-npx create-t3-chill-app my-t3-chill-app
-
-# Navigate to your project
-cd my-t3-chill-app
-
-# Follow the setup guide at http://localhost:3000
+npx create-t3-chill-app
+cd my-t3-chill-app // Or the name of your project
 ```
 
-### Option 2: Clone the Repository
+- The CLI will check your environment (Node, Docker)
+- Scaffold your project from a template
+- Install dependencies (unless you use `--skip-install`)
+- Start local Supabase containers (unless you use `--skip-setup`)
+- Guide you through environment setup and Stripe integration
+
+#### **What you need before running the command:**
+
+- [Docker Desktop](https://www.docker.com/products/docker-desktop/) **(must be installed and running)**
+- [Node.js 18+](https://nodejs.org/) **(must be installed)**
+- A text editor (VS Code recommended)
+
+#### **If you run into issues:**
+
+- Make sure Docker is running and accessible from your terminal
+- Make sure you are using Node.js 18 or higher (`node -v`)
+- If you see permission errors with Docker on Linux, ensure your user is in the `docker` group
+- If you are behind a corporate proxy, dependency installation may fail—try `--skip-install` and run `npm install` manually
+
+#### **After the CLI finishes:**
+
+- Follow the on-screen instructions to update your `.env` and `.env.local` files
+- For local development, copy the local Supabase anon key (shown in the CLI output)
+- Stripe integration is optional and can be configured later
+
+#### **Start developing:**
 
 ```bash
-# 1. Clone and Install
-git clone <your-repo>
-cd create-t3-chill-app
-npm install
-
-# 2. Environment Setup
-cp .env.example .env
-cp .env.example .env.local
-
-# 3. Database Setup
-npm run prisma:generate
-npm run prisma:reset
-
-# 4. Start Development
 npm run dev
 ```
 
-Visit [localhost:3000](http://localhost:3000) for the complete setup guide!
+Visit [http://localhost:3000](http://localhost:3000) for your app and a full setup guide.
 
-## 🛠️ Complete Setup Guide
+---
 
-**The fastest way to get started:** Visit your app's homepage at [localhost:3000](http://localhost:3000) after installation for a comprehensive step-by-step setup guide with detailed instructions.
+## 🛠️ Manual Installation (Advanced/Alternative)
 
-### 📋 Prerequisites
-
-Before you begin, ensure you have:
-
-- [Docker Desktop](https://www.docker.com/products/docker-desktop/) installed and running
-- [Node.js 18+](https://nodejs.org/) installed
-- A text editor (VS Code recommended)
-
-### 🐳 Step 1: Prerequisites & Local Development
-
-#### 1. Install Required Tools
-
-- Install Docker Desktop and ensure it's running
-- Install Node.js 18+
-- Clone this repository and run `npm install`
-
-#### 2. Setup Environment Files
-
-Create these files from the template:
+> If you want to set up everything yourself, or want to contribute to the starter kit, clone the repo directly:
 
 ```bash
-# Copy .env.example to .env (for database config - required by Prisma)
-cp .env.example .env
+git clone https://github.com/yasindunethmina/create-t3-chill-app.git
+cd create-t3-chill-app
+npm install
+```
 
-# Copy .env.example to .env.local (for secrets and overrides)
+### 1. **Setup Environment Files**
+
+```bash
+cp .env.example .env
 cp .env.example .env.local
 ```
 
-#### 3. Start Local Supabase with Docker
+### 2. **Start Local Supabase (Docker must be running)**
 
 ```bash
-# Start local Supabase instance (requires Docker)
 npm run db:start
-
-# Check status - should show all services running
-npm run db:status
-
-# Stop when done developing
-npm run db:stop
 ```
 
-This creates a local PostgreSQL database at `127.0.0.1:54322` and Supabase API at `127.0.0.1:54321`
+### 3. **Generate Prisma Client and Reset DB**
 
-#### 4. Configure Local Environment
+```bash
+npm run prisma:generate
+npm run prisma:reset
+```
 
-Edit your `.env` file (required for Prisma):
+### 4. **Start Development Server**
+
+```bash
+npm run dev
+```
+
+Visit [http://localhost:3000](http://localhost:3000) for the complete setup guide!
+
+---
+
+## 📝 Environment Variables
+
+**.env** (for Prisma/DB):
 
 ```env
-# .env - Database URLs (MUST be in .env, not .env.local)
 DATABASE_URL="postgresql://postgres:postgres@127.0.0.1:54322/postgres"
 DIRECT_URL="postgresql://postgres:postgres@127.0.0.1:54322/postgres"
 ```
 
-Edit your `.env.local` file:
+**.env.local** (for app/Supabase/Stripe):
 
 ```env
-# .env.local - Local Supabase instance (Docker)
 NEXT_PUBLIC_SUPABASE_URL="http://127.0.0.1:54321"
 NEXT_PUBLIC_SUPABASE_PUBLISHABLE_OR_ANON_KEY="[LOCAL_ANON_KEY]"
 NODE_ENV="development"
 NEXT_PUBLIC_APP_URL="http://localhost:3000"
+
+# Stripe (optional, for payments)
+STRIPE_SECRET_KEY="[STRIPE_SECRET_KEY]"
+NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY="[NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY]"
+NEXT_PUBLIC_STRIPE_PRICE_ID="[NEXT_PUBLIC_STRIPE_PRICE_ID]"
+STRIPE_WEBHOOK_SECRET="[STRIPE_WEBHOOK_SECRET]"
 ```
 
-### 🔺 Step 2: Database Schema & Migrations
+---
 
-#### 1. Generate Prisma Client
+## 💳 Stripe Integration (Optional)
+
+1. [Create a Stripe account](https://stripe.com)
+2. Add a product and get the **Price ID**
+3. Add your Stripe keys to `.env.local`
+4. [Install Stripe CLI](https://stripe.com/docs/stripe-cli) and run:
 
 ```bash
-# Generate TypeScript types from schema
-npm run prisma:generate
-```
-
-#### 2. Reset Database Schema
-
-```bash
-# Reset database schema to local instance
-# Hit 'y' on your keyboard to confirm
-npm run prisma:reset
-```
-
-This creates tables for users, subscriptions, posts, and comments
-
-#### 3. View Your Database (Optional)
-
-```bash
-# Open Prisma Studio to view/edit data
-npm run prisma:studio
-```
-
-Opens at `localhost:5555`
-
-### 🌐 Step 3: Production Supabase Setup (Not necessary to get started)
-
-#### 1. Create Supabase Project
-
-- Go to [supabase.com](https://supabase.com) and create an account
-- Click "New Project" and fill in details
-- Wait for provisioning (~2 minutes)
-
-#### 2. Get Production Environment Variables
-
-From Settings → API:
-
-```env
-NEXT_PUBLIC_SUPABASE_URL="https://[project-ref].supabase.co"
-NEXT_PUBLIC_SUPABASE_PUBLISHABLE_OR_ANON_KEY="[PRODUCTION_ANON_KEY]"
-```
-
-#### 3. Get Production Database URLs
-
-From Database → Connection pooling:
-
-```env
-# Transaction pooler (for DATABASE_URL)
-DATABASE_URL="postgresql://postgres.[ref]:[password]@aws-1-us-east-1.pooler.supabase.com:6543/postgres"
-
-# Session pooler (for DIRECT_URL)
-DIRECT_URL="postgresql://postgres.[ref]:[password]@aws-1-us-east-1.pooler.supabase.com:5432/postgres"
-```
-
-#### 4. Deploy Schema to Production
-
-```bash
-# Create .env.production file with production URLs above, then:
-npm run prisma:migrate:prod
-```
-
-### 💳 Step 4: Stripe Integration Setup (Not necessary to get started)
-
-#### 1. Create Stripe Account & Product
-
-- Create account at [stripe.com](https://stripe.com)
-- Go to Products → Add Product
-- Name: "Pro Plan", Price: $9.99/month (or your choice)
-- Save and copy the **Price ID** (starts with `price_`)
-
-#### 2. Get Stripe API Keys
-
-From Developers → API keys:
-
-```env
-# Add to .env.local
-STRIPE_SECRET_KEY="sk_test_51..."
-NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY="pk_test_51..."
-NEXT_PUBLIC_STRIPE_PRICE_ID="[PRICE_ID]"
-```
-
-#### 3. Setup Webhook for Local Testing
-
-```bash
-# Install Stripe CLI (one time)
-# Download from: https://stripe.com/docs/stripe-cli
-
-# Login and forward events to your local webhook
 stripe login
 stripe listen --forward-to localhost:3000/api/stripe/webhook
-
-# Copy the webhook signing secret (whsec_...) to .env.local
-STRIPE_WEBHOOK_SECRET="whsec_..."
 ```
 
-#### 4. Test Subscription Flow
+Copy the webhook secret to `.env.local` as `STRIPE_WEBHOOK_SECRET`.
+
+---
+
+## 🧪 Testing
 
 - Start your app: `npm run dev`
-- Go to `/dashboard`
-- Click "Subscribe Now"
-- Use test card: `4242 4242 4242 4242`
-- Webhook will update subscription status in real-time
+- Test authentication (sign up, login, password reset)
+- Test protected routes and subscription features
+- Test Stripe payment flow (use test card: `4242 4242 4242 4242`)
 
-### 🧪 Step 5: Testing
-
-- Start your development server:
-
-```bash
-  npm run dev
-```
-
-- Visit localhost:3000 in your browser.
-- Test authentication flows (sign up, login, password reset).
-- Test protected routes and subscription features.
-- Test Stripe payment flow using the test card: 4242 4242 4242 4242 (If Step 4 has completed).
+---
 
 ## 🔧 Development Commands
-
-### Daily Development Commands
 
 ```bash
 # Start Development
@@ -315,15 +244,7 @@ npm run db:reset
 npm run build
 ```
 
-### Production Commands
-
-```bash
-# Deploy schema to production
-npm run prisma:migrate:prod
-
-# Generate Prisma client
-npm run prisma:generate
-```
+---
 
 ## 🚀 Deployment
 
@@ -338,8 +259,6 @@ npm run prisma:generate
 
 ### Environment Variables for Production
 
-Create these environment variables in your hosting platform:
-
 ```env
 # 🗄️ Supabase Configuration
 NEXT_PUBLIC_SUPABASE_URL="https://[project-ref].supabase.co"
@@ -350,12 +269,14 @@ DATABASE_URL="postgresql://postgres.[ref]:[password]@aws-1-us-east-1.pooler.supa
 DIRECT_URL="postgresql://postgres.[ref]:[password]@aws-1-us-east-1.pooler.supabase.com:5432/postgres"
 
 # 💳 Stripe Configuration
-STRIPE_SECRET_KEY="sk_live_..."
-NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY="pk_live_..."
-NEXT_PUBLIC_STRIPE_PRICE_ID="price_..."
-STRIPE_WEBHOOK_SECRET="whsec_..."
+STRIPE_SECRET_KEY="[STRIPE_SECRET_KEY]"
+NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY="[NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY]"
+NEXT_PUBLIC_STRIPE_PRICE_ID="[NEXT_PUBLIC_STRIPE_PRICE_ID]"
+STRIPE_WEBHOOK_SECRET="[STRIPE_WEBHOOK_SECRET]"
 NEXT_PUBLIC_APP_URL="https://[your-domain].com"
 ```
+
+---
 
 ## 📖 What's Included
 
@@ -401,13 +322,19 @@ NEXT_PUBLIC_APP_URL="https://[your-domain].com"
 - Modern component architecture
 - Custom subscription hook (`useSubscription`)
 
+---
+
 ## 📚 Learn More
 
 For detailed setup instructions and troubleshooting, visit your app's homepage at [localhost:3000](http://localhost:3000) after installation.
 
+---
+
 ## 🆘 Support
 
 - File issues on [GitHub](https://github.com/yasindunethmina/create-t3-chill-app/issues)
+
+---
 
 ## 🔗 Resources
 
@@ -417,3 +344,9 @@ For detailed setup instructions and troubleshooting, visit your app's homepage a
 - [Prisma Documentation](https://www.prisma.io/docs)
 - [Stripe Documentation](https://stripe.com/docs)
 - [shadcn/ui Documentation](https://ui.shadcn.com)
+
+---
+
+**Happy hacking! 🚀**
+
+_If you enjoy this project, please consider giving it a ⭐️ on GitHub!_
