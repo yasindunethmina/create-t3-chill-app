@@ -15,8 +15,8 @@ const defaultUrl = env.NEXT_PUBLIC_APP_URL;
 
 export const metadata: Metadata = {
   metadataBase: new URL(defaultUrl),
-  title: "T3 Chill Stack - Ship products faster",
-  description: "Welcome to the T3 Chill Stack",
+  title: "Create T3 Chill App - Ship products faster",
+  description: "Welcome to the Create T3 Chill App",
 };
 
 const geistSans = Geist({

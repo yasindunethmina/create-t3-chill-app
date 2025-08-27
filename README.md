@@ -1,4 +1,4 @@
-## 🚀 T3 Chill Stack — Everything You Need in a Minimal, Powerful Stack
+## 🚀 Create T3 Chill App — Everything You Need in a Minimal, Powerful Stack
 
 **Next.js • Supabase • tRPC • Prisma • Stripe**
 
@@ -74,7 +74,7 @@
 ### Option 1: Use the Create Package (Recommended)
 
 ```bash
-# Create a new project with T3 Chill Stack
+# Create a new project with Create T3 Chill App
 npx create-t3-chill-app my-t3-chill-app
 
 # Navigate to your project

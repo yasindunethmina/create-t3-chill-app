@@ -20,7 +20,7 @@ export default async function DashboardPage() {
           <div className="space-y-2">
             <h1 className="text-3xl font-bold">Dashboard</h1>
             <p className="text-muted-foreground">
-              Welcome to your T3 Chill Stack dashboard!
+              Welcome to your Create T3 Chill App dashboard!
             </p>
           </div>
         </div>

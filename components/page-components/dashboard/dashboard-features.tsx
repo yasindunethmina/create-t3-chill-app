@@ -22,7 +22,7 @@ export function DashboardFeatures() {
       <CardHeader>
         <div className="flex items-center gap-2">
           <Book className="h-5 w-5" />
-          <CardTitle>T3 Chill Stack Features</CardTitle>
+          <CardTitle>Create T3 Chill App Features</CardTitle>
         </div>
         <CardDescription>
           Everything is pre-configured and ready to use

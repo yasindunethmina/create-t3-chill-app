@@ -86,7 +86,7 @@ async function buildCLI() {
 
     // Copy environment files (always include these)
     console.log("📝 Copying environment files...");
-    const envFiles = [".env", ".env.local", ".env.production"];
+    const envFiles = [".env", ".env.local", ".env.production", ".env.example"];
     for (const envFile of envFiles) {
       if (existsSync(`../${envFile}`)) {
         await copyFile(`../${envFile}`, `dist/template/${envFile}`);
@@ -160,7 +160,7 @@ node_modules/
 .pnp
 .pnp.js
 
-# Next.js
+# Next.js build output
 .next/
 out/
 build/
@@ -170,18 +170,14 @@ build/
 .env.local
 .env.production
 
-# TypeScript
+# TypeScript build info
 *.tsbuildinfo
-next-env.d.ts
 
-# Supabase
+# Supabase (local dev artifacts)
 supabase/.branches/
 supabase/.temp/
 
-# Prisma
-prisma/migrations/*.sql
-
-# IDE
+# IDE/editor folders
 .vscode/
 .idea/
 

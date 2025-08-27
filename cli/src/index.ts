@@ -10,7 +10,7 @@ const program = new Command();
 program
   .name("create-t3-chill-app")
   .description(
-    "Create a T3 Chill Stack project with Next.js, Supabase, tRPC, Prisma, and Stripe",
+    "Build a project with Next.js, Supabase, tRPC, Prisma, and Stripe using the Create T3 Chill App CLI.",
   )
   .version("1.0.0")
   .argument("[project-name]", "Name of the project directory")

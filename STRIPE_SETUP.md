@@ -1,6 +1,6 @@
 # Stripe Integration Setup Guide
 
-This guide will walk you through setting up Stripe integration for subscription management in T3 Chill Stack.
+This guide will walk you through setting up Stripe integration for subscription management in Create T3 Chill App.
 
 ## Prerequisites
 

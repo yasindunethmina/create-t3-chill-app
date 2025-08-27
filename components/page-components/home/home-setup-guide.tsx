@@ -163,7 +163,7 @@ export function HomeSetupGuide() {
         <div className="text-center mb-12">
           <h2 className="text-3xl font-bold mb-4">Installation Guide</h2>
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-            Choose the easiest way to get started with T3 Chill Stack.
+            Choose the easiest way to get started with Create T3 Chill App.
           </p>
         </div>
 
@@ -302,7 +302,7 @@ npm run dev`}
             <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
               Prefer to set up everything yourself or want to contribute? Follow
               this complete step-by-step guide to install, configure, and deploy
-              T3 Chill Stack from scratch.
+              Create T3 Chill App from scratch.
             </p>
           </div>
 
@@ -323,8 +323,8 @@ npm run dev`}
             </CardHeader>
             <CardContent className="space-y-4">
               <pre className="text-xs bg-muted p-3 rounded overflow-x-auto">
-                {`git clone https://github.com/yasindunethmina/t3-chill-stack.git
-cd t3-chill-stack
+                {`git clone https://github.com/yasindunethmina/create-t3-chill-app.git
+cd create-t3-chill-app
 npm install`}
               </pre>
               <ul className="text-sm text-muted-foreground space-y-1 ml-4">

@@ -17,7 +17,7 @@ const asciiArt = `
 
 function printWelcome() {
   console.log(chalk.cyan.bold(asciiArt));
-  console.log(chalk.magenta.bold("Welcome to T3 Chill Stack! 🚀\n"));
+  console.log(chalk.magenta.bold("Welcome to Create T3 Chill App! 🚀\n"));
   console.log(
     chalk.gray(
       "The fastest way to ship products with Next.js, Supabase, tRPC, Prisma, and Stripe.\n",
@@ -615,5 +615,5 @@ export async function setupProject(
   );
   console.log(chalk.cyan("  X (Twitter): https://x.com/yasinduneth"));
   console.log(chalk.cyan("  LinkedIn:   https://linkedin.com/in/yasinduneth"));
-  console.log(chalk.gray("\nThank you for using T3 Chill Stack! 🙏\n"));
+  console.log(chalk.gray("\nThank you for building with Create T3 Chill App! 🙏\n"));
 }

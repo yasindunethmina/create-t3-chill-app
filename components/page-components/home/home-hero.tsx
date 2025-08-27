@@ -12,7 +12,7 @@ export function HomeHero() {
         <div className="flex items-center gap-2 mb-4">
           <Badge variant="secondary" className="text-sm">
             <Zap className="h-3 w-3 mr-1" />
-            T3 Chill Stack
+            Create T3 Chill App
           </Badge>
         </div>
         <h1 className="text-4xl lg:text-6xl font-bold bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text text-transparent">
