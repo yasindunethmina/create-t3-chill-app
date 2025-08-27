@@ -27,7 +27,8 @@ export const userRouter = createTRPCRouter({
   // Example: Subscription-only features (requires active subscription)
   getProFeatures: subscribedProcedure.query(async ({ ctx }) => {
     return {
-      message: "🎉 Welcome to Pro! You have access to all premium features.",
+      message:
+        "🎉 Your subscription details have been added! If the 'stripeSubscriptionId' or 'stripePriceId' columns are still null in your database, make sure you've run the Stripe CLI and completed all setup steps. Refer to the setup guide for troubleshooting.",
       features: [
         "Advanced Analytics",
         "Priority Support",
