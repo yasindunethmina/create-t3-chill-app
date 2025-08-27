@@ -18,10 +18,14 @@ export default function SignUpSuccessPage() {
               </CardTitle>
               <CardDescription>Check your email to confirm</CardDescription>
             </CardHeader>
-            <CardContent>
+            <CardContent className="space-y-4">
               <p className="text-sm text-muted-foreground">
                 You&apos;ve successfully signed up. Please check your email to
                 confirm your account before signing in.
+              </p>
+              <p className="text-xs text-muted-foreground">
+                (In development, you may be logged in automatically. In
+                production, email confirmation is required.)
               </p>
             </CardContent>
           </Card>

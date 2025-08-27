@@ -190,8 +190,8 @@ export function HomeSetupGuide() {
               <pre className="text-xs bg-muted p-3 rounded overflow-x-auto">
                 {`npx create-t3-chill-app`}
               </pre>
-              <p className="text-sm text-muted-foreground mt-2">
-                The CLI will:
+              <div className="text-sm text-muted-foreground mt-2">
+                <span>The CLI will:</span>
                 <ul className="list-disc ml-6">
                   <li>Check your environment (Node.js, Docker)</li>
                   <li>Scaffold your project from a template</li>
@@ -205,7 +205,7 @@ export function HomeSetupGuide() {
                   </li>
                   <li>Guide you through environment and Stripe setup</li>
                 </ul>
-              </p>
+              </div>
             </div>
             <div>
               <h4 className="font-semibold mb-2">Step 2: Prerequisites</h4>
