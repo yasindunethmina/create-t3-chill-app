@@ -41,16 +41,16 @@ async function buildCLI() {
 
     console.log("✅ CLI built successfully");
 
-    // Create template directory structure
+    // Create template directory structure at root level
     console.log("📁 Creating template structure...");
     const templateDirs = [
-      "dist/template",
-      "dist/template/app",
-      "dist/template/components",
-      "dist/template/lib",
-      "dist/template/hooks",
-      "dist/template/providers",
-      "dist/template/prisma",
+      "template",
+      "template/app",
+      "template/components",
+      "template/lib",
+      "template/hooks",
+      "template/providers",
+      "template/prisma",
     ];
     for (const dir of templateDirs) {
       await mkdir(dir, { recursive: true });
@@ -60,7 +60,7 @@ async function buildCLI() {
     // Copy package.json for the generated project
     console.log("📦 Copying project package.json...");
     if (existsSync("../package.json")) {
-      await copyFile("../package.json", "dist/template/package.json");
+      await copyFile("../package.json", "template/package.json");
       console.log("✅ Project package.json copied successfully");
     } else {
       console.log("⚠️  package.json not found, skipping...");
@@ -71,16 +71,16 @@ async function buildCLI() {
     if (existsSync("../prisma/schema.prisma")) {
       await copyFile(
         "../prisma/schema.prisma",
-        "dist/template/prisma/schema.prisma",
+        "template/prisma/schema.prisma",
       );
     }
     if (existsSync("../prisma/seed.ts")) {
-      await copyFile("../prisma/seed.ts", "dist/template/prisma/seed.ts");
+      await copyFile("../prisma/seed.ts", "template/prisma/seed.ts");
     }
 
     // Copy migration files
     if (existsSync("../prisma/migrations")) {
-      await copyDir("../prisma/migrations", "dist/template/prisma/migrations");
+      await copyDir("../prisma/migrations", "template/prisma/migrations");
     }
     console.log("✅ Prisma files copied successfully");
 
@@ -89,7 +89,7 @@ async function buildCLI() {
     const envFiles = [".env", ".env.local", ".env.production", ".env.example"];
     for (const envFile of envFiles) {
       if (existsSync(`../${envFile}`)) {
-        await copyFile(`../${envFile}`, `dist/template/${envFile}`);
+        await copyFile(`../${envFile}`, `template/${envFile}`);
         console.log(`✅ ${envFile} copied successfully`);
       } else {
         console.log(`⚠️  ${envFile} not found, skipping...`);
@@ -123,7 +123,7 @@ async function buildCLI() {
 
     for (const file of filesToCopy) {
       if (existsSync(`../${file}`)) {
-        await copyFile(`../${file}`, `dist/template/${file}`);
+        await copyFile(`../${file}`, `template/${file}`);
         console.log(`✅ ${file} copied successfully`);
       } else {
         console.log(`⚠️  ${file} not found, skipping...`);
@@ -146,7 +146,7 @@ async function buildCLI() {
 
     for (const dir of directoriesToCopy) {
       if (existsSync(`../${dir}`)) {
-        await copyDir(`../${dir}`, `dist/template/${dir}`);
+        await copyDir(`../${dir}`, `template/${dir}`);
         console.log(`✅ ${dir} directory copied successfully`);
       } else {
         console.log(`⚠️  ${dir} directory not found, skipping...`);
@@ -199,10 +199,8 @@ coverage/
 .cache/
 .parcel-cache/
 `;
-    await writeFile("dist/template/.gitignore", projectGitignoreContent);
+    await writeFile("template/.gitignore", projectGitignoreContent);
     console.log("✅ .gitignore created for generated projects");
-
-    // No cleanup needed since we only copy what we want
 
     console.log("🎉 Build completed successfully!");
   } catch (error) {

@@ -1,6 +1,6 @@
-# Create T3 Chill App CLI
+# Create T3 Chill App
 
-Build a project with Next.js, Supabase, tRPC, Prisma, and Stripe using the Create T3 Chill App CLI.
+Build a project with Next.js, Supabase, tRPC, Prisma, and Stripe using the Create T3 Chill App.
 
 ## Usage
 

@@ -13,12 +13,8 @@ import { XCircle } from "lucide-react";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 
-type RedirectPageProps = {
-  searchParams: {
-    session_id?: string;
-    type?: string;
-    return_to?: string;
-  };
+type PageProps = {
+  searchParams?: Promise<Record<string, string | string[] | undefined>>;
 };
 
 function getStripeErrorInfo(result: StripeVerifyResultT) {
@@ -50,62 +46,63 @@ function getStripeErrorInfo(result: StripeVerifyResultT) {
   };
 }
 
-export default async function RedirectPage({
-  searchParams,
-}: RedirectPageProps) {
+export default async function RedirectPage({ searchParams }: PageProps) {
+  const params = (await searchParams) ?? {};
+
+  const sessionId =
+    typeof params.session_id === "string" ? params.session_id : "";
+  const pageType = typeof params.type === "string" ? params.type : "";
+  const returnTo =
+    typeof params.return_to === "string" ? params.return_to : "/";
+
   const user = await getUser();
-  if (!user) redirect("/auth/login");
-
-  const {
-    session_id: sessionId = "",
-    type = "",
-    return_to: returnTo = "/",
-  } = searchParams;
-
-  switch (type) {
-    case "subscription":
-      if (!sessionId) redirect(returnTo);
-
-      const result: StripeVerifyResultT =
-        await trpcServer.subscription.verifyCheckoutSession({
-          sessionId,
-        });
-
-      if (result.success) {
-        redirect(returnTo);
-      }
-
-      const errorInfo = getStripeErrorInfo(result);
-
-      return (
-        <div className="my-20 flex items-center justify-center">
-          <Card className="w-full max-w-md border-red-200 dark:border-red-800">
-            <CardHeader className="text-center">
-              <div className="mx-auto w-12 h-12 bg-red-100 dark:bg-red-900 rounded-full flex items-center justify-center mb-4">
-                <XCircle className="w-6 h-6 text-red-600 dark:text-red-400" />
-              </div>
-              <CardTitle className="text-xl">{errorInfo.title}</CardTitle>
-              <CardDescription>{errorInfo.description}</CardDescription>
-            </CardHeader>
-            <CardContent className="text-center space-y-4">
-              <div className="text-sm text-muted-foreground">
-                {errorInfo.details}
-              </div>
-              <div className="flex gap-2">
-                <Button variant="outline" asChild className="flex-1">
-                  <Link href={errorInfo.buttonLink}>
-                    {errorInfo.buttonText}
-                  </Link>
-                </Button>
-                <Button variant="default" asChild className="flex-1">
-                  <Link href="mailto:contact@m.com">Contact Support</Link>
-                </Button>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-      );
-    default:
-      redirect(returnTo);
+  if (!user) {
+    return redirect("/auth/login");
   }
+
+  if (pageType === "subscription") {
+    if (!sessionId) {
+      return redirect(returnTo);
+    }
+
+    const result: StripeVerifyResultT =
+      await trpcServer.subscription.verifyCheckoutSession({
+        sessionId,
+      });
+
+    if (result.success) {
+      return redirect(returnTo);
+    }
+
+    const { title, description, details, buttonText, buttonLink } =
+      getStripeErrorInfo(result);
+
+    return (
+      <div className="my-20 flex items-center justify-center">
+        <Card className="w-full max-w-md border-red-200 dark:border-red-800">
+          <CardHeader className="text-center">
+            <div className="mx-auto w-12 h-12 bg-red-100 dark:bg-red-900 rounded-full flex items-center justify-center mb-4">
+              <XCircle className="w-6 h-6 text-red-600 dark:text-red-400" />
+            </div>
+            <CardTitle className="text-xl">{title}</CardTitle>
+            <CardDescription>{description}</CardDescription>
+          </CardHeader>
+          <CardContent className="text-center space-y-4">
+            <div className="text-sm text-muted-foreground">{details}</div>
+            <div className="flex gap-2">
+              <Button variant="outline" asChild className="flex-1">
+                <Link href={buttonLink}>{buttonText}</Link>
+              </Button>
+              <Button variant="default" asChild className="flex-1">
+                <Link href="mailto:contact@m.com">Contact Support</Link>
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
+
+  // default fallback
+  return redirect(returnTo);
 }

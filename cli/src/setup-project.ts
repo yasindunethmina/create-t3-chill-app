@@ -605,7 +605,7 @@ export async function setupProject(
 
   console.log(
     chalk.magenta(
-      "If you enjoy using this project, please consider giving it a ⭐️ on GitHub!",
+      "If you enjoy using this project, please consider giving it a ⭐️ on GitHub!\n",
     ),
   );
   console.log(

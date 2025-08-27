@@ -69,18 +69,15 @@ export async function createProject(
   const name = await getProjectName(projectName, options);
   const projectPath = resolve(process.cwd(), name);
 
-  // Try to find template in multiple possible locations
-  let templatePath = join(process.cwd(), "dist", "template");
+  // First check if running from npm package (npx or global install)
+  let templatePath = join(__dirname, "..", "template");
   if (!existsSync(templatePath)) {
-    templatePath = join(__dirname, "..", "template");
+    // Fallback for local development
+    templatePath = join(process.cwd(), "template");
   }
   if (!existsSync(templatePath)) {
-    templatePath = join(
-      process.cwd(),
-      "node_modules",
-      "create-t3-chill-app",
-      "template",
-    );
+    // Another fallback for local development with dist
+    templatePath = join(process.cwd(), "dist", "template");
   }
 
   if (!existsSync(templatePath)) {
