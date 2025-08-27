@@ -21,7 +21,7 @@
 
 ### 🚀 One-Command Project Bootstrap
 - 
-  Get started instantly with the `npx create-t3-chill-app` CLI tool. It checks your environment, scaffolds your project, installs dependencies, and guides you through environment and Stripe setup—so you can focus on building, not configuring.
+  Get started instantly with the `npx create-t3-chill-app` CLI tool. It checks your environment, scaffolds your project, installs dependencies, and guides you through environment and Stripe setup, so you can focus on building, not configuring.
 
 ### 🔐 Authentication & Security
 
