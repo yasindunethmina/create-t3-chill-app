@@ -3,7 +3,7 @@ import { spawn } from "child_process";
 import ora from "ora";
 import { CLIOptionsT } from "./create-project.js";
 
-// ASCII Art for Welcome
+// --- ASCII Art ---
 const asciiArt = `
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // ██████╗██████╗ ███████╗ █████╗ ████████╗███████╗ ████████╗██████╗        ██████╗██╗  ██╗██╗██╗     ██╗       █████╗ ██████╗ ██████╗  //
@@ -25,6 +25,7 @@ function printWelcome() {
   );
 }
 
+// --- Utility: Run a shell command with spinner ---
 function runCommandAsync(
   command: string,
   cwd: string,
@@ -57,11 +58,13 @@ function runCommandAsync(
   });
 }
 
+// --- Step 1: Install dependencies ---
 async function installDependencies(cwd: string): Promise<boolean> {
   console.log(chalk.blue.bold("\n📦 Installing dependencies...\n"));
   return await runCommandAsync("npm install", cwd, "Installing packages");
 }
 
+// --- Step 2: Start Supabase containers ---
 async function checkContainerStatus(cwd: string): Promise<boolean> {
   try {
     const { execSync } = await import("child_process");
@@ -104,6 +107,7 @@ async function startContainers(cwd: string): Promise<boolean> {
   return true;
 }
 
+// --- Step 3: Check environment files ---
 async function checkEnvironmentFiles(cwd: string): Promise<boolean> {
   console.log(chalk.blue.bold("\n📝 Checking environment files...\n"));
 
@@ -163,6 +167,7 @@ async function checkEnvironmentFiles(cwd: string): Promise<boolean> {
   }
 }
 
+// --- Step 4: Validate environment file content ---
 async function validateRequiredEnvironmentContent(
   cwd: string,
 ): Promise<{ isValid: boolean; issues: string[] }> {
@@ -420,6 +425,7 @@ async function validateEnvironmentFiles(cwd: string): Promise<boolean> {
   }
 }
 
+// --- Step 5: Setup database ---
 async function setupDatabase(cwd: string): Promise<boolean> {
   console.log(chalk.blue.bold("\n🗄️  Setting up database...\n"));
 
@@ -497,6 +503,7 @@ async function setupDatabase(cwd: string): Promise<boolean> {
   }
 }
 
+// --- Step 6: Stripe info ---
 async function setupStripe(): Promise<void> {
   console.log(chalk.blue.bold("\n💳 Setting up Stripe integration...\n"));
 
@@ -516,6 +523,7 @@ async function setupStripe(): Promise<void> {
   );
 }
 
+// --- Main orchestrator ---
 export async function setupProject(
   projectPath: string,
   options?: CLIOptionsT,
