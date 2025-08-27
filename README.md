@@ -300,52 +300,6 @@ NEXT_PUBLIC_APP_URL="https://[your-domain].com"
 
 ---
 
-## 📖 What's Included
-
-### 🔐 **Authentication System**
-
-- Email/password authentication with Supabase
-- Protected routes with automatic redirects
-- Session management across server and client
-- Password reset and email confirmation flows
-
-### 🗄️ **Database & ORM**
-
-- PostgreSQL database via Supabase
-- Prisma ORM with type-safe queries
-- Pre-configured schema with users and subscriptions
-- Migration system for schema changes
-
-### 🔄 **Type-Safe APIs**
-
-- tRPC procedures for full-stack type safety
-- Three procedure types: `publicProcedure`, `authenticatedProcedure`, `subscribedProcedure`
-- Server-side and client-side data fetching
-- Automatic type generation and validation
-
-### 💳 **Stripe Integration**
-
-- Complete subscription management system
-- Webhook handling for real-time updates
-- Protected content based on subscription status
-- Clean subscription UI components
-
-### 🛡️ **Environment Validation System**
-
-- Zod-based validation with automatic server/client separation
-- Type-safe access to environment variables
-- Prevents runtime errors from missing configuration
-- Handles both development and production environments
-
-### 🎨 **UI & Styling**
-
-- shadcn/ui components with Tailwind CSS
-- Responsive design patterns
-- Modern component architecture
-- Custom subscription hook (`useSubscription`)
-
----
-
 ## 📚 Learn More
 
 For detailed setup instructions and troubleshooting, visit your app's homepage at [localhost:3000](http://localhost:3000) after installation.
