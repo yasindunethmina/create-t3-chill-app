@@ -1,7 +1,8 @@
 {
   "name": "create-t3-chill-app",
-  "version": "1.0.0",
-  "description": "Build a project with Next.js, Supabase, tRPC, Prisma, and Stripe using the Create T3 Chill App",
+  "version": "1.0.5",
+  "description": "Build a project with Next.js, Supabase, tRPC, Prisma, and Stripe using the Create T3 Chill App CLI",
+  "type": "module",
   "main": "dist/index.js",
   "bin": {
     "create-t3-chill-app": "./dist/index.js"
@@ -17,9 +18,12 @@
     "build": "tsx build.ts",
     "dev": "tsx src/index.ts",
     "create-t3-chill-app": "npm run build && node dist/index.js my-t3-chill-app",
-    "prepublishOnly": "npm run build"
+    "prepublishOnly": "npm run build",
+    "lint": "eslint src --ext .ts --fix",
+    "type-check": "tsc --noEmit"
   },
   "keywords": [
+    "cli",
     "nextjs",
     "supabase",
     "trpc",
@@ -28,7 +32,8 @@
     "typescript",
     "fullstack",
     "starter",
-    "template"
+    "template",
+    "t3-stack"
   ],
   "author": "Yasindu Nethmina",
   "license": "MIT",
@@ -44,6 +49,9 @@
     "@types/fs-extra": "^11.0.4",
     "@types/node": "^20.19.11",
     "@types/prompts": "^2.4.9",
+    "@typescript-eslint/eslint-plugin": "^6.19.0",
+    "@typescript-eslint/parser": "^6.19.0",
+    "eslint": "^8.56.0",
     "tsx": "^4.16.2",
     "typescript": "^5"
   },

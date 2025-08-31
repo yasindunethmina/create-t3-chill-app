@@ -2,8 +2,22 @@ import { build } from "esbuild";
 import { existsSync } from "fs";
 import { copyFile, mkdir, readdir } from "fs/promises";
 import { join } from "path";
+import {
+  CORE_FILES,
+  ENVIRONMENT_FILES,
+  SOURCE_DIRECTORIES,
+  TEMPLATE_DIRECTORIES,
+} from "./src/constants";
 
-async function copyDir(src: string, dest: string) {
+const colors = {
+  green: (text: string) => `\x1b[32m${text}\x1b[0m`,
+  yellow: (text: string) => `\x1b[33m${text}\x1b[0m`,
+  red: (text: string) => `\x1b[31m${text}\x1b[0m`,
+  cyan: (text: string) => `\x1b[36m${text}\x1b[0m`,
+  gray: (text: string) => `\x1b[90m${text}\x1b[0m`,
+};
+
+async function copyDir(src: string, dest: string): Promise<void> {
   if (!existsSync(dest)) {
     await mkdir(dest, { recursive: true });
   }
@@ -22,7 +36,7 @@ async function copyDir(src: string, dest: string) {
   }
 }
 
-async function buildCLI() {
+async function buildCLI(): Promise<void> {
   try {
     console.log("🔨 Building CLI...");
 
@@ -33,130 +47,135 @@ async function buildCLI() {
       platform: "node",
       target: "node18",
       outfile: "dist/index.js",
-      format: "cjs",
+      format: "esm",
       external: ["chalk", "commander", "ora", "prompts", "fs-extra", "glob"],
       minify: true,
       sourcemap: true,
     });
 
-    console.log("✅ CLI built successfully");
+    console.log(colors.green("✅ CLI built successfully"));
 
-    // Create template directory structure at root level
+    // Create template directory structure
     console.log("📁 Creating template structure...");
-    const templateDirs = [
-      "template",
-      "template/app",
-      "template/components",
-      "template/lib",
-      "template/hooks",
-      "template/providers",
-      "template/prisma",
-    ];
-    for (const dir of templateDirs) {
+    for (const dir of TEMPLATE_DIRECTORIES) {
       await mkdir(dir, { recursive: true });
     }
-    console.log("✅ Template structure created");
+    console.log(colors.green("✅ Template structure created"));
 
-    // Copy package.json for the generated project
+    // Copy project package.json
     console.log("📦 Copying project package.json...");
     if (existsSync("../package.json")) {
       await copyFile("../package.json", "template/package.json");
-      console.log("✅ Project package.json copied successfully");
+      console.log(colors.green("✅ Project package.json copied"));
     } else {
-      console.log("⚠️  package.json not found, skipping...");
+      console.log(colors.yellow("⚠️  package.json not found, skipping..."));
     }
 
     // Copy Prisma files
     console.log("🗄️  Copying Prisma files...");
-    if (existsSync("../prisma/schema.prisma")) {
-      await copyFile(
-        "../prisma/schema.prisma",
-        "template/prisma/schema.prisma",
-      );
-    }
-    if (existsSync("../prisma/seed.ts")) {
-      await copyFile("../prisma/seed.ts", "template/prisma/seed.ts");
+    const prismaFiles = ["schema.prisma", "seed.ts"];
+    let prismaFilesCopied = 0;
+
+    for (const file of prismaFiles) {
+      if (existsSync(`../prisma/${file}`)) {
+        await copyFile(`../prisma/${file}`, `template/prisma/${file}`);
+        prismaFilesCopied++;
+      }
     }
 
     // Copy migration files
     if (existsSync("../prisma/migrations")) {
       await copyDir("../prisma/migrations", "template/prisma/migrations");
     }
-    console.log("✅ Prisma files copied successfully");
 
-    // Copy environment files (always include these)
+    console.log(
+      colors.green(`✅ Prisma files copied (${prismaFilesCopied} files)`),
+    );
+
+    // Copy environment files
     console.log("📝 Copying environment files...");
-    const envFiles = [".env", ".env.local", ".env.production", ".env.example"];
-    for (const envFile of envFiles) {
+    let envFilesCopied = 0;
+
+    for (const envFile of ENVIRONMENT_FILES) {
       if (existsSync(`../${envFile}`)) {
         await copyFile(`../${envFile}`, `template/${envFile}`);
-        console.log(`✅ ${envFile} copied successfully`);
-      } else {
-        console.log(`⚠️  ${envFile} not found, skipping...`);
+        envFilesCopied++;
       }
     }
 
-    // Copy other necessary files
-    const filesToCopy = [
-      "next.config.ts",
-      "tailwind.config.ts",
-      "postcss.config.mjs",
-      "components.json",
-      "eslint.config.mjs",
-      "tsconfig.json",
-      "next-env.d.ts",
-      "middleware.ts",
-      "prisma.config.ts",
-      ".gitignore",
-      ".npmignore",
-      ".prettierrc",
-      "STRIPE_SETUP.md",
-      "README.md",
-      "app/favicon.ico",
-      "app/globals.css",
-      "app/layout.tsx",
-      "app/page.tsx",
-      "lib/utils.ts",
-      "lib/env.ts",
-      "lib/prisma.ts",
-      "lib/routes.ts",
-    ];
+    console.log(
+      colors.green(
+        `✅ Environment files copied (${envFilesCopied}/${ENVIRONMENT_FILES.length})`,
+      ),
+    );
 
-    for (const file of filesToCopy) {
+    // Copy core project files
+    console.log("📄 Copying core project files...");
+    let filesCopied = 0;
+
+    for (const file of CORE_FILES) {
       if (existsSync(`../${file}`)) {
         await copyFile(`../${file}`, `template/${file}`);
-        console.log(`✅ ${file} copied successfully`);
-      } else {
-        console.log(`⚠️  ${file} not found, skipping...`);
+        filesCopied++;
       }
     }
 
-    // Copy entire directories recursively
-    console.log("📁 Copying app directories...");
-    const directoriesToCopy = [
-      "app/trpc",
-      "app/api",
-      "app/(protected)",
-      "app/auth",
-      "lib/supabase",
-      "lib/stripe",
-      "components",
-      "providers",
-      "hooks",
-    ];
+    console.log(
+      colors.green(
+        `✅ Core files copied (${filesCopied}/${CORE_FILES.length})`,
+      ),
+    );
 
-    for (const dir of directoriesToCopy) {
+    // Copy source directories
+    console.log("📁 Copying source directories...");
+    let dirsCopied = 0;
+
+    for (const dir of SOURCE_DIRECTORIES) {
       if (existsSync(`../${dir}`)) {
         await copyDir(`../${dir}`, `template/${dir}`);
-        console.log(`✅ ${dir} directory copied successfully`);
-      } else {
-        console.log(`⚠️  ${dir} directory not found, skipping...`);
+        dirsCopied++;
       }
     }
 
-    console.log("🎉 Build completed successfully!");
+    console.log(
+      colors.green(
+        `✅ Source directories copied (${dirsCopied}/${SOURCE_DIRECTORIES.length})`,
+      ),
+    );
+
+    console.log(colors.green("🎉 Build completed successfully!"));
   } catch (error) {
-    console.error("❌ Build failed:", error);
+    console.error(colors.red("❌ Build failed:"));
+
+    if (error instanceof Error) {
+      console.error(colors.red(`   ${error.message}`));
+
+      // Add helpful context for common build errors
+      if (
+        error.message.includes("ENOENT") ||
+        error.message.includes("not found")
+      ) {
+        console.log(colors.yellow("💡 This might be due to:"));
+        console.log(
+          colors.gray("   - Missing source files in the parent directory"),
+        );
+        console.log(colors.gray("   - Running build from wrong directory"));
+        console.log(colors.gray("   - Incomplete project structure"));
+      } else if (
+        error.message.includes("EACCES") ||
+        error.message.includes("permission")
+      ) {
+        console.log(colors.yellow("💡 Permission denied. Try:"));
+        console.log(colors.gray("   - Running with appropriate permissions"));
+        console.log(colors.gray("   - Checking directory permissions"));
+      }
+    } else {
+      console.error(colors.red(`   ${String(error)}`));
+    }
+
+    console.log(
+      colors.yellow("🔄 Check the issues above and try building again."),
+    );
     process.exit(1);
   }
 }
