@@ -1,7 +1,7 @@
 // App Information
 const appConfig = {
   name: "create-t3-chill-app",
-  version: "1.0.8",
+  version: "1.1.0",
   description:
     "Build a project with Next.js, Supabase, tRPC, Prisma, and Stripe using the Create T3 Chill App CLI.",
 } as const;
