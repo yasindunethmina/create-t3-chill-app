@@ -188,7 +188,7 @@ export function HomeSetupGuide() {
             <div>
               <h4 className="font-semibold mb-2">Step 1: Run the CLI</h4>
               <pre className="text-xs bg-muted p-3 rounded overflow-x-auto">
-                {`npx create-t3-chill-app`}
+                {`npx create-t3-chill-app@latest`}
               </pre>
               <div className="text-sm text-muted-foreground mt-2">
                 <span>The CLI will:</span>

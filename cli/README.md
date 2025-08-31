@@ -36,7 +36,7 @@ Create T3 Chill App is a powerful CLI tool that scaffolds a complete full-stack 
 ## 🚀 Quick Start
 
 ```bash
-npx create-t3-chill-app
+npx create-t3-chill-app@latest
 ```
 
 ## 📖 Usage
