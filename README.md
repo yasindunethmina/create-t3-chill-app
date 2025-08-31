@@ -9,15 +9,14 @@ The fastest way to ship products with a modern stack. Skip the setup and focus o
 ## 🚀 Quick Start (Recommended)
 
 **Create a new project in seconds:** <br>
-_(If not working try npx create-t3-chill-app-dev)_
 
 <div align="center">
   
 ```bash
-npx create-t3-chill-app
+npx create-t3-chill-app@latest
 ```
 
-<img width="759" height="884" alt="create-t3-chill-app-cli" src="https://github.com/user-attachments/assets/bda2cdbe-b87a-4f14-a457-67644b43bee7" />
+<img width="797" height="739" alt="Screenshot 2025-08-31 220039" src="https://github.com/user-attachments/assets/f603076f-6a11-496b-8951-15cce38fa5fd" />
 </div>
 
 ---
@@ -26,7 +25,7 @@ npx create-t3-chill-app
 
 ### ⚡️ Instant Project Setup with CLI
 
-- **Streamlined CLI tool:** Quickly scaffold your project with `npx create-t3-chill-app`
+- **Streamlined CLI tool:** Quickly scaffold your project with `npx create-t3-chill-app@latest`
 - **Environment checks:** Ensures Node.js and Docker are ready before scaffolding
 - **Guided setup:** Walks you through environment variables, Supabase, and Stripe integration
 - **Flexible options:** Skip dependency install or Supabase setup with CLI flags
@@ -114,7 +113,7 @@ npx create-t3-chill-app
 > **This is the fastest and easiest way to get started.**
 
 ```bash
-npx create-t3-chill-app
+npx create-t3-chill-app@latest
 cd my-t3-chill-app // Or the name of your project
 ```
 
