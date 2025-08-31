@@ -1,7 +1,7 @@
 // App Information
 const appConfig = {
   name: "create-t3-chill-app",
-  version: "1.1.0",
+  version: "1.1.1",
   description:
     "Build a project with Next.js, Supabase, tRPC, Prisma, and Stripe using the Create T3 Chill App CLI.",
 } as const;
@@ -48,6 +48,7 @@ const templateStructure = {
     "template/hooks",
     "template/providers",
     "template/prisma",
+    "template/supabase",
   ],
   coreFiles: [
     "next.config.ts",
@@ -72,6 +73,8 @@ const templateStructure = {
     "lib/env.ts",
     "lib/prisma.ts",
     "lib/routes.ts",
+    "supabase/config.toml",
+    "supabase/.gitignore",
   ],
   sourceDirectories: [
     "app/trpc",

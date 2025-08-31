@@ -7,9 +7,14 @@ import {
 } from "../services/environment-validator";
 import { showSetupInfo } from "../services/stripe-setup";
 import type { CLIOptionsT, ProjectConfigT } from "../types";
+import { updateEnvironmentTemplates } from "../utils/config-updater";
 import logger from "../utils/logger";
+import type { PortAllocation } from "../utils/port-finder";
 
-const showSuccessMessage = (projectConfig: ProjectConfigT): void => {
+const showSuccessMessage = (
+  projectConfig: ProjectConfigT,
+  portAllocation?: PortAllocation,
+): void => {
   logger.success("\n🎉 Project setup completed successfully!\n");
 
   logger.info("Your T3 Chill App is ready! Here's what's been set up:");
@@ -22,6 +27,19 @@ const showSuccessMessage = (projectConfig: ProjectConfigT): void => {
     ],
     "cyan",
   );
+
+  if (portAllocation) {
+    logger.info("\n🌐 Services are running on:");
+    logger.list(
+      [
+        `API Server: http://127.0.0.1:${portAllocation.api}`,
+        `Database: postgresql://postgres:postgres@127.0.0.1:${portAllocation.db}/postgres`,
+        `Studio Dashboard: http://127.0.0.1:${portAllocation.studio}`,
+        `Email Testing: http://127.0.0.1:${portAllocation.inbucket}`,
+      ],
+      "cyan",
+    );
+  }
 
   logger.step("🚀 Next steps:");
   logger.list(
@@ -103,7 +121,10 @@ export const setup = async (
     }
 
     // Start containers
-    await startContainers(projectConfig.path);
+    const portAllocation = await startContainers(projectConfig.path);
+
+    // Update environment templates with actual ports
+    await updateEnvironmentTemplates(projectConfig.path, portAllocation);
 
     // Check and validate environment files
     await checkEnvironmentFiles(projectConfig.path);
@@ -117,7 +138,7 @@ export const setup = async (
     showSetupInfo();
 
     // Show success message
-    showSuccessMessage(projectConfig);
+    showSuccessMessage(projectConfig, portAllocation);
   } catch (err) {
     handleCriticalError(err);
     throw err;
