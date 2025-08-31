@@ -22,7 +22,7 @@ const showSkippedSetupMessage = (projectPath: string): void => {
   logger.list(
     [
       "𝕏 (Twitter): https://x.com/yasinduneth",
-      "LinkedIn: https://www.linkedin.com/in/yasinduneth/",
+      "LinkedIn: https://www.linkedin.com/in/yasinduneth",
     ],
     "cyan",
   );
