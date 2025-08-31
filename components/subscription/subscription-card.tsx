@@ -26,6 +26,13 @@ export function SubscriptionCard() {
   } = useSubscription();
 
   const handleSubscribe = async () => {
+    if (!stripeEnabled) {
+      toast.error(
+        "Subscription is unavailable. Stripe environment variables are not configured.",
+      );
+      return;
+    }
+
     try {
       const result = await createCheckoutSession({
         planId: "pro",
@@ -66,13 +73,32 @@ export function SubscriptionCard() {
             <AlertTriangle className="h-6 w-6 text-orange-600 dark:text-orange-400" />
           </div>
           <CardTitle className="text-xl text-orange-800 dark:text-orange-200">
-            Stripe Not Configured
+            Subscription Unavailable
           </CardTitle>
           <CardDescription className="text-orange-700 dark:text-orange-300">
-            Please configure your Stripe environment variables to enable
-            subscriptions
+            Stripe is not properly configured. Please add the following
+            environment variables to enable subscriptions:
           </CardDescription>
         </CardHeader>
+        <CardContent className="space-y-2">
+          <div className="text-center space-y-1">
+            <p className="text-sm font-mono text-orange-600 dark:text-orange-400">
+              STRIPE_SECRET_KEY
+            </p>
+            <p className="text-sm font-mono text-orange-600 dark:text-orange-400">
+              STRIPE_WEBHOOK_SECRET
+            </p>
+            <p className="text-sm font-mono text-orange-600 dark:text-orange-400">
+              NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
+            </p>
+            <p className="text-sm font-mono text-orange-600 dark:text-orange-400">
+              NEXT_PUBLIC_STRIPE_PRICE_ID
+            </p>
+          </div>
+          <p className="text-xs text-orange-600 dark:text-orange-400 text-center mt-4">
+            Check the STRIPE_SETUP.md guide for detailed setup instructions.
+          </p>
+        </CardContent>
       </Card>
     );
   }
@@ -110,13 +136,15 @@ export function SubscriptionCard() {
             <Button
               className="w-full"
               onClick={handleSubscribe}
-              disabled={isCreatingCheckout}
+              disabled={isCreatingCheckout || !stripeEnabled}
             >
               {isCreatingCheckout ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                   Processing...
                 </>
+              ) : !stripeEnabled ? (
+                "Stripe Not Configured"
               ) : (
                 "Subscribe"
               )}

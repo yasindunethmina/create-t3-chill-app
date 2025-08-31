@@ -118,6 +118,22 @@ export function serverEnv(): ServerEnv {
   return env as ServerEnv;
 }
 
+// Common placeholder patterns that indicate Stripe is not properly configured
+const PLACEHOLDER_PATTERNS = [
+  /^\[.*\]$/, // [STRIPE_SECRET_KEY] style placeholders
+  /^your_/i, // your_stripe_key style placeholders
+  /^replace/i, // replace_with_your_key style placeholders
+  /^sk_test_.*example/i, // example test keys
+  /^pk_test_.*example/i, // example publishable keys
+  /^price_.*example/i, // example price IDs
+  /^whsec_.*example/i, // example webhook secrets
+];
+
+const isPlaceholderValue = (value: string | undefined): boolean => {
+  if (!value || value.trim() === "") return true;
+  return PLACEHOLDER_PATTERNS.some((pattern) => pattern.test(value.trim()));
+};
+
 // Utility functions
 export const isStripeConfigured = () => {
   const isServer = typeof window === "undefined";
@@ -129,14 +145,20 @@ export const isStripeConfigured = () => {
       server.STRIPE_SECRET_KEY &&
       server.STRIPE_WEBHOOK_SECRET &&
       server.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY &&
-      server.NEXT_PUBLIC_STRIPE_PRICE_ID
+      server.NEXT_PUBLIC_STRIPE_PRICE_ID &&
+      !isPlaceholderValue(server.STRIPE_SECRET_KEY) &&
+      !isPlaceholderValue(server.STRIPE_WEBHOOK_SECRET) &&
+      !isPlaceholderValue(server.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY) &&
+      !isPlaceholderValue(server.NEXT_PUBLIC_STRIPE_PRICE_ID)
     );
   } else {
     // Client-side: only check client variables
     const client = env as ClientEnv;
     return !!(
       client.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY &&
-      client.NEXT_PUBLIC_STRIPE_PRICE_ID
+      client.NEXT_PUBLIC_STRIPE_PRICE_ID &&
+      !isPlaceholderValue(client.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY) &&
+      !isPlaceholderValue(client.NEXT_PUBLIC_STRIPE_PRICE_ID)
     );
   }
 };
